@@ -1006,7 +1006,9 @@ async function openRandom(categoryId){
   return toast(m,"danger");
  }
 
- const x=data?.[0];
+ console.log("OPEN RANDOM DATA:", data);
+const x = Array.isArray(data) ? data[0] : data;
+console.log("ACCOUNT:", x);
 
  if(!x){
   return toast(
