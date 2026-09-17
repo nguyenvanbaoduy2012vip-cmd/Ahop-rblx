@@ -4,224 +4,2475 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BD Roblox Shop</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#fff7f7,#f7f7f7);color:#241b1b}
-button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}
-header{position:sticky;top:0;z-index:20;background:#fffafaee;backdrop-filter:blur(12px);border-bottom:1px solid #f0dada}
-.nav{max-width:1150px;margin:auto;padding:14px 18px;display:flex;align-items:center;gap:14px}
-.logo{font-size:22px;font-weight:900;color:#c71919;margin-right:auto}.logo span{color:#222}
-.nav button{background:#fff;border:1px solid #ead5d5;padding:9px 14px;border-radius:999px}
-.nav .primary,.primary{background:#c71919;color:white;border-color:#c71919}
-.container{max-width:1150px;margin:auto;padding:24px 18px 60px}
-.hero{padding:28px;border-radius:25px;background:linear-gradient(135deg,#c71919,#e94343);color:#fff;box-shadow:0 15px 40px #b9000020;margin-bottom:24px}
-.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;opacity:.9}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.card{background:#fff;border:1px solid #eddede;border-radius:20px;overflow:hidden;box-shadow:0 8px 25px #9b00000d}
-.card img{width:100%;height:150px;object-fit:cover;background:#f5eeee}.card-body{padding:16px}.card h3{margin:0 0 7px}.price{color:#c71919;font-weight:900;font-size:19px}.muted{color:#786d6d;font-size:14px}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.actions button{padding:10px 13px;border-radius:12px}
-.empty{text-align:center;padding:40px;background:#fff;border:1px dashed #dfbcbc;border-radius:18px}
-.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.show{display:flex}
-.modal-box{width:min(520px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:24px;padding:22px}
-.modal-head{display:flex;align-items:center;gap:10px}.modal-head h2{margin:0;flex:1}
-input,textarea,select{width:100%;padding:12px;border:1px solid #dfcaca;border-radius:12px;outline:none;background:#fff;margin-top:6px}
-input:focus,textarea:focus,select:focus{border-color:#c71919}.field{margin:12px 0}.field label{font-weight:700;font-size:14px}
-.close{background:#f5eeee;padding:8px 12px;border-radius:50%}
-.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:18px}.tabs button{white-space:nowrap;background:#fff;border:1px solid #ead5d5;padding:10px 15px;border-radius:999px}.tabs button.active{background:#c71919;color:#fff}
-.row{display:flex;gap:10px;align-items:center;justify-content:space-between}.balance{font-weight:900;color:#c71919}
-.admin-section{margin-top:25px}.admin-item{padding:13px;border:1px solid #eddede;border-radius:15px;margin:9px 0;background:#fff}
-.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#f8eaea;font-size:12px;font-weight:700}.success{background:#e8f8ed;color:#18733b}.danger{background:#fde7e7;color:#a90000}.warn{background:#fff4d9;color:#8b5a00}
-#toast{position:fixed;right:18px;bottom:18px;z-index:100;display:flex;flex-direction:column;gap:9px}.toast{background:#241b1b;color:#fff;padding:13px 16px;border-radius:14px;box-shadow:0 10px 30px #0003;animation:in .2s}@keyframes in{from{transform:translateY(10px);opacity:0}}
-.hidden{display:none!important}.small{font-size:13px}.danger-btn{background:#ffe9e9!important;color:#b00000}
-.result{background:#fff5f5;border:1px solid #efcaca;border-radius:18px;padding:18px;margin-top:15px}
-code,.credential{word-break:break-all}
-@media(max-width:650px){.nav{flex-wrap:wrap}.nav button{padding:8px 10px}.hero h1{font-size:27px}.grid{grid-template-columns:1fr 1fr}.card img{height:120px}}
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(135deg,#fff7f7,#f7f7f7);
+ color:#241b1b;
+}
+
+button,input,textarea,select{font:inherit}
+
+button{
+ cursor:pointer;
+ border:0;
+}
+
+header{
+ position:sticky;
+ top:0;
+ z-index:20;
+ background:#fffafaee;
+ backdrop-filter:blur(12px);
+ border-bottom:1px solid #f0dada;
+}
+
+.nav{
+ max-width:1150px;
+ margin:auto;
+ padding:14px 18px;
+ display:flex;
+ align-items:center;
+ gap:14px;
+}
+
+.logo{
+ font-size:22px;
+ font-weight:900;
+ color:#c71919;
+ margin-right:auto;
+}
+
+.logo span{color:#222}
+
+.nav button{
+ background:#fff;
+ border:1px solid #ead5d5;
+ padding:9px 14px;
+ border-radius:999px;
+}
+
+.nav .primary,.primary{
+ background:#c71919;
+ color:white;
+ border-color:#c71919;
+}
+
+.container{
+ max-width:1150px;
+ margin:auto;
+ padding:24px 18px 60px;
+}
+
+.hero{
+ padding:28px;
+ border-radius:25px;
+ background:linear-gradient(135deg,#c71919,#e94343);
+ color:#fff;
+ box-shadow:0 15px 40px #b9000020;
+ margin-bottom:24px;
+}
+
+.hero h1{
+ margin:0 0 8px;
+ font-size:34px;
+}
+
+.hero p{
+ margin:0;
+ opacity:.9;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+ gap:16px;
+}
+
+.card{
+ background:#fff;
+ border:1px solid #eddede;
+ border-radius:20px;
+ overflow:hidden;
+ box-shadow:0 8px 25px #9b00000d;
+}
+
+.card img{
+ width:100%;
+ height:150px;
+ object-fit:cover;
+ background:#f5eeee;
+}
+
+.card-body{padding:16px}
+
+.card h3{
+ margin:0 0 7px;
+}
+
+.price{
+ color:#c71919;
+ font-weight:900;
+ font-size:19px;
+}
+
+.muted{
+ color:#786d6d;
+ font-size:14px;
+}
+
+.actions{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+ margin-top:14px;
+}
+
+.actions button{
+ padding:10px 13px;
+ border-radius:12px;
+}
+
+.empty{
+ text-align:center;
+ padding:40px;
+ background:#fff;
+ border:1px dashed #dfbcbc;
+ border-radius:18px;
+}
+
+.modal{
+ position:fixed;
+ inset:0;
+ background:#0008;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:18px;
+ z-index:50;
+}
+
+.modal.show{display:flex}
+
+.modal-box{
+ width:min(520px,100%);
+ max-height:90vh;
+ overflow:auto;
+ background:#fff;
+ border-radius:24px;
+ padding:22px;
+}
+
+.modal-head{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+
+.modal-head h2{
+ margin:0;
+ flex:1;
+}
+
+input,textarea,select{
+ width:100%;
+ padding:12px;
+ border:1px solid #dfcaca;
+ border-radius:12px;
+ outline:none;
+ background:#fff;
+ margin-top:6px;
+}
+
+input:focus,textarea:focus,select:focus{
+ border-color:#c71919;
+}
+
+.field{margin:12px 0}
+
+.field label{
+ font-weight:700;
+ font-size:14px;
+}
+
+.close{
+ background:#f5eeee;
+ padding:8px 12px;
+ border-radius:50%;
+}
+
+.tabs{
+ display:flex;
+ gap:8px;
+ overflow:auto;
+ margin-bottom:18px;
+}
+
+.tabs button{
+ white-space:nowrap;
+ background:#fff;
+ border:1px solid #ead5d5;
+ padding:10px 15px;
+ border-radius:999px;
+}
+
+.tabs button.active{
+ background:#c71919;
+ color:#fff;
+}
+
+.row{
+ display:flex;
+ gap:10px;
+ align-items:center;
+ justify-content:space-between;
+}
+
+.balance{
+ font-weight:900;
+ color:#c71919;
+}
+
+.admin-item{
+ padding:13px;
+ border:1px solid #eddede;
+ border-radius:15px;
+ margin:9px 0;
+ background:#fff;
+}
+
+.status{
+ display:inline-block;
+ padding:5px 9px;
+ border-radius:999px;
+ background:#f8eaea;
+ font-size:12px;
+ font-weight:700;
+}
+
+.success{
+ background:#e8f8ed;
+ color:#18733b;
+}
+
+.danger{
+ background:#fde7e7;
+ color:#a90000;
+}
+
+.warn{
+ background:#fff4d9;
+ color:#8b5a00;
+}
+
+#toast{
+ position:fixed;
+ right:18px;
+ bottom:18px;
+ z-index:100;
+ display:flex;
+ flex-direction:column;
+ gap:9px;
+}
+
+.toast{
+ background:#241b1b;
+ color:#fff;
+ padding:13px 16px;
+ border-radius:14px;
+ box-shadow:0 10px 30px #0003;
+ animation:in .2s;
+}
+
+@keyframes in{
+ from{
+  transform:translateY(10px);
+  opacity:0;
+ }
+}
+
+.hidden{
+ display:none!important;
+}
+
+.small{
+ font-size:13px;
+}
+
+.danger-btn{
+ background:#ffe9e9!important;
+ color:#b00000;
+}
+
+.result{
+ background:#fff5f5;
+ border:1px solid #efcaca;
+ border-radius:18px;
+ padding:18px;
+ margin-top:15px;
+}
+
+code,.credential{
+ word-break:break-all;
+}
+
+.loading{
+ text-align:center;
+ padding:30px;
+ color:#786d6d;
+}
+
+@media(max-width:650px){
+ .nav{
+  flex-wrap:wrap;
+ }
+
+ .nav button{
+  padding:8px 10px;
+ }
+
+ .hero h1{
+  font-size:27px;
+ }
+
+ .grid{
+  grid-template-columns:1fr 1fr;
+ }
+
+ .card img{
+  height:120px;
+ }
+}
 </style>
 </head>
+
 <body>
+
 <header>
  <div class="nav">
-  <div class="logo">BD <span>ROBLOX SHOP</span></div>
-  <button onclick="showSection('shop')">Shop</button>
-  <button onclick="openTopup()">💳 Nạp thẻ</button>
-  <button onclick="openHistory()">📜 Lịch sử</button>
+
+  <div class="logo">
+   BD <span>ROBLOX SHOP</span>
+  </div>
+
+  <button onclick="showSection('shop')">
+   Shop
+  </button>
+
+  <button onclick="openTopup()">
+   💳 Nạp thẻ
+  </button>
+
+  <button onclick="openHistory()">
+   📜 Lịch sử
+  </button>
+
   <span id="userArea"></span>
+
  </div>
 </header>
 
 <main class="container">
+
  <section id="shop">
-  <div class="hero"><h1>🎁 BD Roblox Shop</h1><p>Xé túi mù • Nhận acc ngẫu nhiên • Dữ liệu đồng bộ Supabase</p></div>
+
+  <div class="hero">
+   <h1>🎁 BD Roblox Shop</h1>
+   <p>
+    Xé túi mù • Nhận acc ngẫu nhiên • Dữ liệu đồng bộ Supabase
+   </p>
+  </div>
+
   <div id="categories" class="grid"></div>
+
  </section>
+
  <section id="admin" class="hidden"></section>
+
 </main>
 
-<div id="modal" class="modal"><div class="modal-box" id="modalBox"></div></div>
+<div id="modal" class="modal">
+ <div class="modal-box" id="modalBox"></div>
+</div>
+
 <div id="toast"></div>
 
 <script>
-const SUPABASE_URL="https://rnbjhfnjyxfpskdszdwi.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY="sb_publishable_JRRtyQgA8xEuR3skPoigDA_Jo-68s-L";
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 
-let currentUser=null,currentProfile=null;
+const SUPABASE_URL =
+"https://rnbjhfnjyxfpskdszdwi.supabase.co";
 
-const money=n=>new Intl.NumberFormat("vi-VN").format(n)+"đ";
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-function toast(msg,type=""){let d=document.createElement("div");d.className="toast "+type;d.textContent=msg;document.querySelector("#toast").appendChild(d);setTimeout(()=>d.remove(),3000)}
-function openModal(html){document.querySelector("#modalBox").innerHTML=html;document.querySelector("#modal").classList.add("show")}
-function closeModal(){document.querySelector("#modal").classList.remove("show")}
-function showSection(x){document.querySelector("#shop").classList.toggle("hidden",x!=="shop");document.querySelector("#admin").classList.add("hidden");loadCategories()}
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_JRRtyQgA8xEuR3skPoigDA_Jo-68s-L";
+
+const sb =
+supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_PUBLISHABLE_KEY
+);
+
+let currentUser=null;
+let currentProfile=null;
+
+const money=n =>
+ new Intl.NumberFormat("vi-VN").format(Number(n)||0)+"đ";
+
+const esc=s =>
+ String(s??"").replace(
+  /[&<>"']/g,
+  m=>({
+   "&":"&amp;",
+   "<":"&lt;",
+   ">":"&gt;",
+   '"':"&quot;",
+   "'":"&#039;"
+  }[m])
+ );
+
+function toast(msg,type=""){
+ const d=document.createElement("div");
+
+ d.className="toast "+type;
+ d.textContent=msg;
+
+ document.querySelector("#toast").appendChild(d);
+
+ setTimeout(()=>{
+  d.remove();
+ },3500);
+}
+
+function openModal(html){
+ document.querySelector("#modalBox").innerHTML=html;
+ document.querySelector("#modal").classList.add("show");
+}
+
+function closeModal(){
+ document.querySelector("#modal").classList.remove("show");
+}
+
+function showSection(x){
+
+ document.querySelector("#shop")
+ .classList.toggle("hidden",x!=="shop");
+
+ document.querySelector("#admin")
+ .classList.add("hidden");
+
+ loadCategories();
+}
+
+
+/* =========================
+   AUTH
+========================= */
+
 function authButtons(){
+
  const a=document.querySelector("#userArea");
- if(!currentUser){a.innerHTML=`<button onclick="openAuth('login')">Đăng nhập</button><button class="primary" onclick="openAuth('register')">Đăng ký</button>`;return}
- a.innerHTML=`<button onclick="openProfile()">👤 ${esc(currentProfile?.username||"Tài khoản")} · ${money(currentProfile?.balance||0)}</button>
- <button onclick="signOut()">Thoát</button>${currentProfile?.role==="admin"?`<button class="primary" onclick="openAdmin()">⚙ Admin</button>`:""}`;
+
+ if(!currentUser){
+
+  a.innerHTML=`
+   <button onclick="openAuth('login')">
+    Đăng nhập
+   </button>
+
+   <button class="primary"
+    onclick="openAuth('register')">
+    Đăng ký
+   </button>
+  `;
+
+  return;
+ }
+
+ a.innerHTML=`
+  <button onclick="openProfile()">
+   👤 ${esc(currentProfile?.username||"Tài khoản")}
+   · ${money(currentProfile?.balance||0)}
+  </button>
+
+  <button onclick="signOut()">
+   Thoát
+  </button>
+
+  ${
+   currentProfile?.role==="admin"
+   ?
+   `<button class="primary"
+      onclick="openAdmin()">
+      ⚙ Admin
+    </button>`
+   :
+   ""
+  }
+ `;
 }
+
 async function refreshUser(){
- const {data:{user}}=await sb.auth.getUser();currentUser=user||null;
- if(user){let r=await sb.from("profiles").select("*").eq("id",user.id).single();currentProfile=r.data||null}
+
+ const {
+  data:{user}
+ }=await sb.auth.getUser();
+
+ currentUser=user||null;
+ currentProfile=null;
+
+ if(user){
+
+  const {
+   data,
+   error
+  }=await sb
+   .from("profiles")
+   .select("*")
+   .eq("id",user.id)
+   .maybeSingle();
+
+  if(error){
+   console.error("PROFILE ERROR:",error);
+  }
+
+  currentProfile=data||null;
+ }
+
  authButtons();
- if(currentProfile?.banned_until && new Date(currentProfile.banned_until)>new Date()) showBan();
-}
-async function signOut(){await sb.auth.signOut();currentUser=null;currentProfile=null;authButtons();toast("Đã đăng xuất")}
-function openAuth(mode="login"){
- openModal(`<div class="modal-head"><h2>${mode==="login"?"Đăng nhập":"Tạo tài khoản"}</h2><button class="close" onclick="closeModal()">×</button></div>
- <div class="field"><label>Tên tài khoản</label><input id="authUser" placeholder="Tên đăng nhập"></div>
- <div class="field"><label>Email</label><input id="authEmail" type="email" placeholder="email@example.com"></div>
- <div class="field"><label>Mật khẩu</label><input id="authPass" type="password" placeholder="••••••••"></div>
- <button class="primary" style="width:100%;padding:13px;border-radius:13px" onclick="${mode==="login"?"login()":"register()"}">${mode==="login"?"Đăng nhập":"Đăng ký"}</button>
- <p class="small muted">Đăng nhập dùng Supabase Auth. Tên tài khoản được lưu trong hồ sơ.</p>`);
-}
-async function register(){
- const username=document.querySelector("#authUser").value.trim(),email=document.querySelector("#authEmail").value.trim(),password=document.querySelector("#authPass").value;
- if(!username||!email||password.length<6)return toast("Nhập đủ thông tin, mật khẩu ít nhất 6 ký tự","danger");
- const {data,error}=await sb.auth.signUp({email,password,options:{data:{username}}});
- if(error)return toast(error.message,"danger");
- closeModal();toast(data.session?"Đăng ký thành công":"Đăng ký thành công, hãy kiểm tra email nếu Supabase đang bật xác minh");
- await refreshUser();
-}
-async function login(){
- const email=document.querySelector("#authEmail").value.trim(),password=document.querySelector("#authPass").value;
- const {error}=await sb.auth.signInWithPassword({email,password});
- if(error)return toast(error.message,"danger");
- closeModal();await refreshUser();toast("Đăng nhập thành công","success");
-}
-function showBan(){
- const until=new Date(currentProfile.banned_until);
- openModal(`<div class="modal-head"><h2>🚫 Tài Khoản Đã Bị Khóa</h2></div>
- <div class="result"><h3>${esc(currentProfile.ban_message||"Tài khoản đã bị khóa.")}</h3>
- <p>Thời gian còn lại: <b id="countdown"></b></p></div>
- <button style="width:100%;padding:12px;border-radius:12px;background:#eee" onclick="closeModal()">Đóng</button>`);
- const timer=setInterval(()=>{let s=Math.max(0,until-new Date()),t=Math.floor(s/1000),d=Math.floor(t/86400);t%=86400;let h=Math.floor(t/3600);t%=3600;let m=Math.floor(t/60);let sec=t%60;let el=document.querySelector("#countdown");if(el)el.textContent=`${d} ngày ${h} giờ ${m} phút ${sec} giây`;if(!s){clearInterval(timer);closeModal();refreshUser()}},1000);
-}
-async function loadCategories(){
- const {data,error}=await sb.from("categories").select("*").eq("active",true).order("created_at",{ascending:false});
- const box=document.querySelector("#categories");if(error){box.innerHTML=`<div class="empty">Không tải được danh mục: ${esc(error.message)}</div>`;return}
- if(!data?.length){box.innerHTML=`<div class="empty">Chưa có danh mục nào.</div>`;return}
- box.innerHTML=data.map(c=>`<article class="card">
-  ${c.image_url?`<img src="${esc(c.image_url)}" alt="">`:"<div style='height:150px;background:#f7eaea;display:grid;place-items:center;font-size:45px'>🎁</div>"}
-  <div class="card-body"><h3>${esc(c.name)}</h3><div class="price">${money(c.price)}</div>
-  <p class="muted">${esc(c.note||"")}</p>
-  <div class="actions"><button class="primary" onclick="openBag('${c.id}')">🎁 Xé túi</button></div></div></article>`).join("");
-}
-async function openBag(id){
- if(!currentUser)return openAuth("login");
- await refreshUser();
- if(currentProfile?.banned_until&&new Date(currentProfile.banned_until)>new Date())return showBan();
- const {data,error}=await sb.from("categories").select("*").eq("id",id).single();if(error)return toast(error.message,"danger");
- openModal(`<div class="modal-head"><h2>🎁 ${esc(data.name)}</h2><button class="close" onclick="closeModal()">×</button></div>
- <p>${esc(data.note||"")}</p><p class="price">${money(data.price)}</p>
- <p class="muted">Hệ thống sẽ chọn ngẫu nhiên 1 tài khoản còn hàng trong danh mục.</p>
- <button class="primary" style="width:100%;padding:14px;border-radius:13px" onclick="openRandom('${id}')">🔥 XÉ NGAY</button>`);
-}
-async function openRandom(categoryId){
- const {data,error}=await sb.rpc("open_random_account",{p_category_id:categoryId});
- if(error){let m=error.message.includes("OUT_OF_STOCK")?"Danh mục này đã hết acc.":error.message.includes("INSUFFICIENT_BALANCE")?"Số dư không đủ.":error.message;return toast(m,"danger")}
- const x=data?.[0];if(!x)return toast("Không nhận được tài khoản","danger");
- openModal(`<div class="modal-head"><h2>🎉 Xé thành công!</h2></div>
- <div class="result"><p><b>Tài khoản</b></p><div class="credential">${esc(x.username)}</div>
- <p><b>Mật khẩu</b></p><div class="credential">${esc(x.password)}</div><p class="muted">Đã trừ ${money(x.amount)}.</p></div>
- <button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="closeModal();refreshUser();loadCategories()">Đã nhận</button>`);
- toast("Xé túi thành công 🎉","success");await refreshUser();
-}
-function openTopup(){
- if(!currentUser)return openAuth("login");
- openModal(`<div class="modal-head"><h2>💳 Nạp thẻ</h2><button class="close" onclick="closeModal()">×</button></div>
- <div class="field"><label>Loại thẻ</label><select id="cardType"><option>Viettel</option><option>VinaPhone</option><option>MobiFone</option><option>Vietnamobile</option><option>Gmobile</option><option>Khác</option></select></div>
- <div class="field"><label>Giá tiền</label><select id="cardValue">${[10000,20000,50000,100000,200000,500000].map(x=>`<option value="${x}">${money(x)}</option>`).join("")}</select></div>
- <div class="field"><label>Serial</label><input id="serial" placeholder="Nhập Serial"></div>
- <div class="field"><label>Mã nạp</label><input id="cardCode" placeholder="Nhập mã thẻ"></div>
- <button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="submitTopup()">Gửi yêu cầu nạp</button>
- <p class="small muted">Yêu cầu sẽ chuyển sang Admin xử lý. Giao diện nhận nhiều loại thẻ; xác thực thẻ tự động cần API nhà cung cấp.</p>`);
-}
-async function submitTopup(){
- const card_type=document.querySelector("#cardType").value,card_value=+document.querySelector("#cardValue").value,serial=document.querySelector("#serial").value.trim(),code=document.querySelector("#cardCode").value.trim();
- if(!serial||!code)return toast("Nhập Serial và mã nạp","danger");
- const {error}=await sb.rpc("submit_topup",{p_card_type:card_type,p_card_value:card_value,p_serial:serial,p_code:code});
- if(error)return toast(error.message,"danger");closeModal();toast("Đã gửi thẻ cho Admin xử lý","success");
-}
-async function openHistory(){
- if(!currentUser)return openAuth("login");
- const {data,error}=await sb.from("orders").select("*,categories(name)").eq("user_id",currentUser.id).order("created_at",{ascending:false});
- const {data:tops}=await sb.from("topups").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
- openModal(`<div class="modal-head"><h2>📜 Lịch sử</h2><button class="close" onclick="closeModal()">×</button></div>
- <h3>Đơn xé</h3>${data?.length?data.map(o=>`<div class="admin-item"><b>${esc(o.categories?.name||"Danh mục")}</b><br>${money(o.amount)} · ${new Date(o.created_at).toLocaleString("vi-VN")}</div>`).join(""):"<p class='muted'>Chưa có đơn xé.</p>"}
- <h3>Nạp thẻ</h3>${tops?.length?tops.map(o=>`<div class="admin-item"><b>${esc(o.card_type)}</b> · ${money(o.card_value)}<br><span class="status ${o.status==="success"?"success":o.status==="rejected"?"danger":"warn"}">${esc(o.status)}</span> · ${new Date(o.created_at).toLocaleString("vi-VN")}</div>`).join(""):"<p class='muted'>Chưa có yêu cầu nạp.</p>"}`);
-}
-function openProfile(){openModal(`<div class="modal-head"><h2>👤 Tài khoản</h2><button class="close" onclick="closeModal()">×</button></div><p>Tên: <b>${esc(currentProfile.username)}</b></p><p>ID: <code>${currentUser.id}</code></p><p>Số dư: <b class="balance">${money(currentProfile.balance)}</b></p>`)}
-async function openAdmin(){
- if(currentProfile?.role!=="admin")return toast("Không có quyền","danger");
- document.querySelector("#shop").classList.add("hidden");const a=document.querySelector("#admin");a.classList.remove("hidden");
- a.innerHTML=`<div class="hero"><h1>⚙ Admin Dashboard</h1><p>Quản lý danh mục, acc, nạp thẻ và ban tài khoản.</p></div>
- <div class="tabs"><button class="active" onclick="adminTab('cats',this)">Danh mục</button><button onclick="adminTab('tops',this)">Nạp thẻ</button><button onclick="adminTab('users',this)">Tài khoản</button></div><div id="adminContent"></div>`;
- adminTab("cats",document.querySelector(".tabs button"));
-}
-async function adminTab(tab,btn){
- document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("active"));btn.classList.add("active");
- const c=document.querySelector("#adminContent");
- if(tab==="cats"){
-  const {data}=await sb.from("categories").select("*").order("created_at",{ascending:false});
-  c.innerHTML=`<div class="actions"><button class="primary" onclick="newCategory()">＋ Thêm danh mục</button></div>${(data||[]).map(x=>`<div class="admin-item"><div class="row"><div><b>${esc(x.name)}</b><br><span class="price">${money(x.price)}</span><br><span class="muted">${esc(x.note||"")}</span></div><button onclick="manageCategory('${x.id}')">Quản lý acc</button></div></div>`).join("")||"<p>Chưa có danh mục.</p>"}`;
- }else if(tab==="tops"){
-  const {data}=await sb.from("topups").select("*,profiles(username)").order("created_at",{ascending:false});
-  c.innerHTML=(data||[]).map(x=>`<div class="admin-item"><b>${esc(x.profiles?.username||x.user_id)}</b> · ${esc(x.card_type)} · ${money(x.card_value)}<br>Serial: <code>${esc(x.serial)}</code><br>Mã: <code>${esc(x.card_code)}</code><br><span class="status">${esc(x.status)}</span>${x.status==="pending"?` <button onclick="processTopup('${x.id}',true)">Duyệt</button> <button class="danger-btn" onclick="processTopup('${x.id}',false)">Từ chối</button>`:""}</div>`).join("")||"<p>Không có yêu cầu.</p>";
- }else{
-  const {data}=await sb.from("profiles").select("*").order("created_at",{ascending:false});
-  c.innerHTML=(data||[]).map(x=>`<div class="admin-item"><div class="row"><div><b>${esc(x.username)}</b> <span class="status">${esc(x.role)}</span><br><span class="small">${x.id}</span><br>Số dư: ${money(x.balance)}</div><button onclick="banUser('${x.id}')">🚫 Ban</button></div></div>`).join("");
+
+ if(
+  currentProfile?.banned_until &&
+  new Date(currentProfile.banned_until)>new Date()
+ ){
+  showBan();
  }
 }
-function newCategory(){openModal(`<div class="modal-head"><h2>＋ Danh mục mới</h2><button class="close" onclick="closeModal()">×</button></div>
-<div class="field"><label>Tên danh mục</label><input id="cn" placeholder="Túi mù 99K"></div><div class="field"><label>Giá</label><input id="cp" type="number" value="99000"></div><div class="field"><label>Link ảnh</label><input id="ci" placeholder="https://..."></div><div class="field"><label>Ghi chú</label><textarea id="co" placeholder="Mô tả danh mục"></textarea></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="saveCategory()">Tạo danh mục</button>`)}
+
+async function signOut(){
+
+ await sb.auth.signOut();
+
+ currentUser=null;
+ currentProfile=null;
+
+ authButtons();
+
+ toast("Đã đăng xuất");
+}
+
+function openAuth(mode="login"){
+
+ openModal(`
+
+  <div class="modal-head">
+
+   <h2>
+    ${
+     mode==="login"
+     ?
+     "Đăng nhập"
+     :
+     "Tạo tài khoản"
+    }
+   </h2>
+
+   <button class="close"
+    onclick="closeModal()">
+    ×
+   </button>
+
+  </div>
+
+  ${
+   mode==="register"
+   ?
+   `
+   <div class="field">
+    <label>Tên tài khoản</label>
+    <input
+     id="authUser"
+     placeholder="Tên đăng nhập">
+   </div>
+   `
+   :
+   ""
+  }
+
+  <div class="field">
+   <label>Email</label>
+   <input
+    id="authEmail"
+    type="email"
+    placeholder="email@example.com">
+  </div>
+
+  <div class="field">
+   <label>Mật khẩu</label>
+   <input
+    id="authPass"
+    type="password"
+    placeholder="••••••••">
+  </div>
+
+  <button
+   class="primary"
+   style="width:100%;padding:13px;border-radius:13px"
+   onclick="${
+    mode==="login"
+    ?
+    "login()"
+    :
+    "register()"
+   }">
+
+   ${
+    mode==="login"
+    ?
+    "Đăng nhập"
+    :
+    "Đăng ký"
+   }
+
+  </button>
+
+ `);
+}
+
+async function register(){
+
+ const username=
+ document.querySelector("#authUser").value.trim();
+
+ const email=
+ document.querySelector("#authEmail").value.trim();
+
+ const password=
+ document.querySelector("#authPass").value;
+
+ if(
+  !username||
+  !email||
+  password.length<6
+ ){
+  return toast(
+   "Nhập đủ thông tin, mật khẩu ít nhất 6 ký tự",
+   "danger"
+  );
+ }
+
+ const {
+  data,
+  error
+ }=await sb.auth.signUp({
+  email,
+  password,
+  options:{
+   data:{username}
+  }
+ });
+
+ if(error){
+  return toast(error.message,"danger");
+ }
+
+ closeModal();
+
+ toast(
+  data.session
+  ?
+  "Đăng ký thành công"
+  :
+  "Đăng ký thành công, hãy kiểm tra email nếu cần xác minh",
+  "success"
+ );
+
+ await refreshUser();
+}
+
+async function login(){
+
+ const email=
+ document.querySelector("#authEmail").value.trim();
+
+ const password=
+ document.querySelector("#authPass").value;
+
+ const {error}=
+ await sb.auth.signInWithPassword({
+  email,
+  password
+ });
+
+ if(error){
+  return toast(error.message,"danger");
+ }
+
+ closeModal();
+
+ await refreshUser();
+
+ toast(
+  "Đăng nhập thành công",
+  "success"
+ );
+}
+
+
+/* =========================
+   BAN
+========================= */
+
+function showBan(){
+
+ const until=
+ new Date(currentProfile.banned_until);
+
+ openModal(`
+
+  <div class="modal-head">
+   <h2>🚫 Tài Khoản Đã Bị Khóa</h2>
+  </div>
+
+  <div class="result">
+
+   <h3>
+    ${esc(
+     currentProfile.ban_message||
+     "Tài khoản đã bị khóa."
+    )}
+   </h3>
+
+   <p>
+    Thời gian còn lại:
+    <b id="countdown"></b>
+   </p>
+
+  </div>
+
+ `);
+
+ const timer=setInterval(()=>{
+
+  let s=Math.max(
+   0,
+   until-new Date()
+  );
+
+  let t=Math.floor(s/1000);
+
+  let d=Math.floor(t/86400);
+
+  t%=86400;
+
+  let h=Math.floor(t/3600);
+
+  t%=3600;
+
+  let m=Math.floor(t/60);
+
+  let sec=t%60;
+
+  const el=
+   document.querySelector("#countdown");
+
+  if(el){
+
+   el.textContent=
+   `${d} ngày ${h} giờ ${m} phút ${sec} giây`;
+
+  }
+
+  if(!s){
+
+   clearInterval(timer);
+
+   closeModal();
+
+   refreshUser();
+
+  }
+
+ },1000);
+}
+
+
+/* =========================
+   CATEGORIES
+========================= */
+
+async function loadCategories(){
+
+ const box=
+ document.querySelector("#categories");
+
+ box.innerHTML=
+ `<div class="loading">Đang tải danh mục...</div>`;
+
+ const {
+  data,
+  error
+ }=await sb
+  .from("categories")
+  .select("*")
+  .eq("active",true)
+  .order("created_at",{ascending:false});
+
+ if(error){
+
+  console.error("CATEGORIES ERROR:",error);
+
+  box.innerHTML=`
+   <div class="empty">
+    <b>Không tải được danh mục</b>
+    <p class="muted">
+     ${esc(error.message)}
+    </p>
+   </div>
+  `;
+
+  return;
+ }
+
+ if(!data?.length){
+
+  box.innerHTML=`
+   <div class="empty">
+    Chưa có danh mục nào.
+   </div>
+  `;
+
+  return;
+ }
+
+ box.innerHTML=data.map(c=>`
+
+  <article class="card">
+
+   ${
+    c.image_url
+    ?
+    `<img src="${esc(c.image_url)}" alt="">`
+    :
+    `
+    <div style="
+     height:150px;
+     background:#f7eaea;
+     display:grid;
+     place-items:center;
+     font-size:45px">
+     🎁
+    </div>
+    `
+   }
+
+   <div class="card-body">
+
+    <h3>
+     ${esc(c.name)}
+    </h3>
+
+    <div class="price">
+     ${money(c.price)}
+    </div>
+
+    <p class="muted">
+     ${esc(c.note||"")}
+    </p>
+
+    <div class="actions">
+
+     <button
+      class="primary"
+      onclick="openBag('${c.id}')">
+      🎁 Xé túi
+     </button>
+
+    </div>
+
+   </div>
+
+  </article>
+
+ `).join("");
+}
+
+
+/* =========================
+   OPEN BAG
+========================= */
+
+async function openBag(id){
+
+ if(!currentUser){
+  return openAuth("login");
+ }
+
+ await refreshUser();
+
+ if(
+  currentProfile?.banned_until &&
+  new Date(currentProfile.banned_until)>new Date()
+ ){
+  return showBan();
+ }
+
+ const {
+  data,
+  error
+ }=await sb
+  .from("categories")
+  .select("*")
+  .eq("id",id)
+  .single();
+
+ if(error){
+  return toast(error.message,"danger");
+ }
+
+ openModal(`
+
+  <div class="modal-head">
+
+   <h2>
+    🎁 ${esc(data.name)}
+   </h2>
+
+   <button
+    class="close"
+    onclick="closeModal()">
+    ×
+   </button>
+
+  </div>
+
+  <p>
+   ${esc(data.note||"")}
+  </p>
+
+  <p class="price">
+   ${money(data.price)}
+  </p>
+
+  <p class="muted">
+   Hệ thống sẽ chọn ngẫu nhiên 1 tài khoản
+   còn hàng trong danh mục.
+  </p>
+
+  <button
+   class="primary"
+   style="width:100%;padding:14px;border-radius:13px"
+   onclick="openRandom('${id}')">
+
+   🔥 XÉ NGAY
+
+  </button>
+
+ `);
+}
+
+async function openRandom(categoryId){
+
+ const {
+  data,
+  error
+ }=await sb.rpc(
+  "open_random_account",
+  {
+   p_category_id:categoryId
+  }
+ );
+
+ if(error){
+
+  let m=error.message;
+
+  if(
+   m.includes("OUT_OF_STOCK")
+  ){
+   m="Danh mục này đã hết acc.";
+  }
+
+  if(
+   m.includes("INSUFFICIENT_BALANCE")
+  ){
+   m="Số dư không đủ.";
+  }
+
+  return toast(m,"danger");
+ }
+
+ const x=data?.[0];
+
+ if(!x){
+  return toast(
+   "Không nhận được tài khoản",
+   "danger"
+  );
+ }
+
+ openModal(`
+
+  <div class="modal-head">
+   <h2>🎉 Xé thành công!</h2>
+  </div>
+
+  <div class="result">
+
+   <p>
+    <b>Tài khoản</b>
+   </p>
+
+   <div class="credential">
+    ${esc(x.username)}
+   </div>
+
+   <p>
+    <b>Mật khẩu</b>
+   </p>
+
+   <div class="credential">
+    ${esc(x.password)}
+   </div>
+
+   <p class="muted">
+    Đã trừ ${money(x.amount)}.
+   </p>
+
+  </div>
+
+  <button
+   class="primary"
+   style="width:100%;padding:13px;border-radius:12px"
+   onclick="
+    closeModal();
+    refreshUser();
+    loadCategories();
+   ">
+
+   Đã nhận
+
+  </button>
+
+ `);
+
+ toast(
+  "Xé túi thành công 🎉",
+  "success"
+ );
+
+ await refreshUser();
+}
+
+
+/* =========================
+   TOPUP USER
+========================= */
+
+function openTopup(){
+
+ if(!currentUser){
+  return openAuth("login");
+ }
+
+ openModal(`
+
+  <div class="modal-head">
+
+   <h2>💳 Nạp thẻ</h2>
+
+   <button
+    class="close"
+    onclick="closeModal()">
+    ×
+   </button>
+
+  </div>
+
+  <div class="field">
+
+   <label>Loại thẻ</label>
+
+   <select id="cardType">
+
+    <option>Viettel</option>
+    <option>VinaPhone</option>
+    <option>MobiFone</option>
+    <option>Vietnamobile</option>
+    <option>Gmobile</option>
+    <option>Khác</option>
+
+   </select>
+
+  </div>
+
+  <div class="field">
+
+   <label>Giá tiền</label>
+
+   <select id="cardValue">
+
+    ${
+     [10000,20000,50000,100000,200000,500000]
+     .map(x=>`
+      <option value="${x}">
+       ${money(x)}
+      </option>
+     `).join("")
+    }
+
+   </select>
+
+  </div>
+
+  <div class="field">
+
+   <label>Serial</label>
+
+   <input
+    id="serial"
+    placeholder="Nhập Serial">
+
+  </div>
+
+  <div class="field">
+
+   <label>Mã nạp</label>
+
+   <input
+    id="cardCode"
+    placeholder="Nhập mã thẻ">
+
+  </div>
+
+  <button
+   class="primary"
+   style="width:100%;padding:13px;border-radius:12px"
+   onclick="submitTopup()">
+
+   Gửi yêu cầu nạp
+
+  </button>
+
+  <p class="small muted">
+   Yêu cầu sẽ chuyển sang Admin xử lý.
+  </p>
+
+ `);
+}
+
+async function submitTopup(){
+
+ const card_type=
+ document.querySelector("#cardType").value;
+
+ const card_value=
+ +document.querySelector("#cardValue").value;
+
+ const serial=
+ document.querySelector("#serial").value.trim();
+
+ const code=
+ document.querySelector("#cardCode").value.trim();
+
+ if(!serial||!code){
+  return toast(
+   "Nhập Serial và mã nạp",
+   "danger"
+  );
+ }
+
+ const {
+  error
+ }=await sb.rpc(
+  "submit_topup",
+  {
+   p_card_type:card_type,
+   p_card_value:card_value,
+   p_serial:serial,
+   p_code:code
+  }
+ );
+
+ if(error){
+
+  console.error(
+   "SUBMIT TOPUP ERROR:",
+   error
+  );
+
+  return toast(
+   error.message,
+   "danger"
+  );
+ }
+
+ closeModal();
+
+ toast(
+  "Đã gửi thẻ cho Admin xử lý",
+  "success"
+ );
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+async function openHistory(){
+
+ if(!currentUser){
+  return openAuth("login");
+ }
+
+ const {
+  data:orders,
+  error:orderError
+ }=await sb
+  .from("orders")
+  .select("*,categories(name)")
+  .eq("user_id",currentUser.id)
+  .order("created_at",{ascending:false});
+
+ const {
+  data:tops,
+  error:topError
+ }=await sb
+  .from("topups")
+  .select("*")
+  .eq("user_id",currentUser.id)
+  .order("created_at",{ascending:false});
+
+ openModal(`
+
+  <div class="modal-head">
+
+   <h2>📜 Lịch sử</h2>
+
+   <button
+    class="close"
+    onclick="closeModal()">
+    ×
+   </button>
+
+  </div>
+
+  <h3>Đơn xé</h3>
+
+  ${
+   orderError
+   ?
+   `<p class="danger">
+     ${esc(orderError.message)}
+    </p>`
+   :
+   orders?.length
+   ?
+   orders.map(o=>`
+
+    <div class="admin-item">
+
+     <b>
+      ${esc(
+       o.categories?.name||
+       "Danh mục"
+      )}
+     </b>
+
+     <br>
+
+     ${money(o.amount)}
+     ·
+     ${new Date(o.created_at)
+       .toLocaleString("vi-VN")}
+
+    </div>
+
+   `).join("")
+   :
+   `<p class="muted">
+     Chưa có đơn xé.
+    </p>`
+  }
+
+  <h3>Nạp thẻ</h3>
+
+  ${
+   topError
+   ?
+   `<p class="danger">
+     ${esc(topError.message)}
+    </p>`
+   :
+   tops?.length
+   ?
+   tops.map(o=>`
+
+    <div class="admin-item">
+
+     <b>
+      ${esc(o.card_type)}
+     </b>
+
+     ·
+     ${money(o.card_value)}
+
+     <br>
+
+     <span class="
+      status
+      ${
+       o.status==="success"
+       ?
+       "success"
+       :
+       o.status==="rejected"
+       ?
+       "danger"
+       :
+       "warn"
+      }
+     ">
+      ${esc(o.status)}
+     </span>
+
+     ·
+
+     ${new Date(o.created_at)
+       .toLocaleString("vi-VN")}
+
+    </div>
+
+   `).join("")
+   :
+   `<p class="muted">
+     Chưa có yêu cầu nạp.
+    </p>`
+  }
+
+ `);
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+function openProfile(){
+
+ openModal(`
+
+  <div class="modal-head">
+
+   <h2>👤 Tài khoản</h2>
+
+   <button
+    class="close"
+    onclick="closeModal()">
+    ×
+   </button>
+
+  </div>
+
+  <p>
+   Tên:
+   <b>
+    ${esc(
+     currentProfile?.username||
+     "Tài khoản"
+    )}
+   </b>
+  </p>
+
+  <p>
+   ID:
+   <code>
+    ${esc(currentUser?.id||"")}
+   </code>
+  </p>
+
+  <p>
+   Số dư:
+   <b class="balance">
+    ${money(currentProfile?.balance||0)}
+   </b>
+  </p>
+
+ `);
+}
+
+
+/* =========================
+   ADMIN
+========================= */
+
+async function openAdmin(){
+
+ if(
+  currentProfile?.role!=="admin"
+ ){
+  return toast(
+   "Không có quyền",
+   "danger"
+  );
+ }
+
+ document
+  .querySelector("#shop")
+  .classList.add("hidden");
+
+ const a=
+ document.querySelector("#admin");
+
+ a.classList.remove("hidden");
+
+ a.innerHTML=`
+
+  <div class="hero">
+
+   <h1>
+    ⚙ Admin Dashboard
+   </h1>
+
+   <p>
+    Quản lý danh mục, acc,
+    nạp thẻ và tài khoản.
+   </p>
+
+  </div>
+
+  <div class="tabs">
+
+   <button
+    class="active"
+    onclick="adminTab('cats',this)">
+    Danh mục
+   </button>
+
+   <button
+    onclick="adminTab('tops',this)">
+    Nạp thẻ
+   </button>
+
+   <button
+    onclick="adminTab('users',this)">
+    Tài khoản
+   </button>
+
+  </div>
+
+  <div id="adminContent">
+   <div class="loading">
+    Đang tải...
+   </div>
+  </div>
+
+ `;
+
+ await adminTab(
+  "cats",
+  document.querySelector(".tabs button")
+ );
+}
+
+
+/* =========================
+   ADMIN TABS
+========================= */
+
+async function adminTab(tab,btn){
+
+ document
+  .querySelectorAll(".tabs button")
+  .forEach(x=>{
+   x.classList.remove("active");
+  });
+
+ btn.classList.add("active");
+
+ const c=
+ document.querySelector("#adminContent");
+
+ c.innerHTML=
+ `<div class="loading">
+   Đang tải...
+  </div>`;
+
+
+/* ---------- CATEGORIES ---------- */
+
+ if(tab==="cats"){
+
+  const {
+   data,
+   error
+  }=await sb
+   .from("categories")
+   .select("*")
+   .order("created_at",{ascending:false});
+
+  if(error){
+
+   console.error(
+    "ADMIN CATEGORIES ERROR:",
+    error
+   );
+
+   c.innerHTML=`
+    <div class="empty">
+     <b>Lỗi tải danh mục</b>
+     <p>${esc(error.message)}</p>
+    </div>
+   `;
+
+   return;
+  }
+
+  c.innerHTML=`
+
+   <div class="actions">
+
+    <button
+     class="primary"
+     onclick="newCategory()">
+     ＋ Thêm danh mục
+    </button>
+
+   </div>
+
+   ${
+    (data||[]).map(x=>`
+
+     <div class="admin-item">
+
+      <div class="row">
+
+       <div>
+
+        <b>
+         ${esc(x.name)}
+        </b>
+
+        <br>
+
+        <span class="price">
+         ${money(x.price)}
+        </span>
+
+        <br>
+
+        <span class="muted">
+         ${esc(x.note||"")}
+        </span>
+
+        <br>
+
+        <span class="
+         status
+         ${
+          x.active
+          ?
+          "success"
+          :
+          "danger"
+         }
+        ">
+         ${
+          x.active
+          ?
+          "Đang bán"
+          :
+          "Ẩn"
+         }
+        </span>
+
+       </div>
+
+       <button
+        onclick="manageCategory('${x.id}')">
+        Quản lý acc
+       </button>
+
+      </div>
+
+     </div>
+
+    `).join("")
+   ||
+   "<p>Chưa có danh mục.</p>"
+   }
+
+  `;
+
+  return;
+ }
+
+
+/* ---------- TOPUPS ---------- */
+
+ if(tab==="tops"){
+
+  const {
+   data:topups,
+   error
+  }=await sb
+   .from("topups")
+   .select("*")
+   .order("created_at",{ascending:false});
+
+  if(error){
+
+   console.error(
+    "ADMIN TOPUPS ERROR:",
+    error
+   );
+
+   c.innerHTML=`
+
+    <div class="empty">
+
+     <b>
+      Không tải được yêu cầu nạp
+     </b>
+
+     <p class="muted">
+      ${esc(error.message)}
+     </p>
+
+    </div>
+
+   `;
+
+   return;
+  }
+
+  if(!topups?.length){
+
+   c.innerHTML=`
+    <div class="empty">
+     Không có yêu cầu nạp thẻ.
+    </div>
+   `;
+
+   return;
+  }
+
+
+  /* Lấy username riêng */
+  const userIds=[
+   ...new Set(
+    topups
+     .map(x=>x.user_id)
+     .filter(Boolean)
+   )
+  ];
+
+  let profiles=[];
+
+  if(userIds.length){
+
+   const {
+    data:p,
+    error:profileError
+   }=await sb
+    .from("profiles")
+    .select("id,username")
+    .in("id",userIds);
+
+   if(profileError){
+
+    console.error(
+     "ADMIN PROFILE ERROR:",
+     profileError
+    );
+
+   }else{
+
+    profiles=p||[];
+
+   }
+  }
+
+  const profileMap={};
+
+  profiles.forEach(p=>{
+   profileMap[p.id]=p.username;
+  });
+
+
+  c.innerHTML=topups.map(x=>{
+
+   const username=
+    profileMap[x.user_id]||
+    x.user_id||
+    "Không xác định";
+
+   let statusClass="warn";
+
+   if(x.status==="success"){
+    statusClass="success";
+   }
+
+   if(x.status==="rejected"){
+    statusClass="danger";
+   }
+
+   return `
+
+    <div class="admin-item">
+
+     <b>
+      👤 ${esc(username)}
+     </b>
+
+     ·
+
+     <b>
+      ${esc(x.card_type)}
+     </b>
+
+     ·
+
+     <span class="price">
+      ${money(x.card_value)}
+     </span>
+
+     <br>
+
+     <span class="small">
+      ${new Date(x.created_at)
+       .toLocaleString("vi-VN")}
+     </span>
+
+     <br><br>
+
+     <b>Serial:</b>
+
+     <code>
+      ${esc(x.serial)}
+     </code>
+
+     <br>
+
+     <b>Mã:</b>
+
+     <code>
+      ${esc(x.card_code)}
+     </code>
+
+     <br><br>
+
+     <span class="status ${statusClass}">
+      ${esc(x.status)}
+     </span>
+
+     ${
+      x.status==="pending"
+      ?
+      `
+       <div class="actions">
+
+        <button
+         class="primary"
+         onclick="
+          processTopup('${x.id}',true)
+         ">
+         ✓ Duyệt
+        </button>
+
+        <button
+         class="danger-btn"
+         onclick="
+          processTopup('${x.id}',false)
+         ">
+         ✕ Từ chối
+        </button>
+
+       </div>
+      `
+      :
+      ""
+     }
+
+    </div>
+
+   `;
+
+  }).join("");
+
+  return;
+ }
+
+
+/* ---------- USERS ---------- */
+
+ if(tab==="users"){
+
+  const {
+   data,
+   error
+  }=await sb
+   .from("profiles")
+   .select("*")
+   .order("created_at",{ascending:false});
+
+  if(error){
+
+   c.innerHTML=`
+    <div class="empty">
+     <b>Lỗi tải tài khoản</b>
+     <p>${esc(error.message)}</p>
+    </div>
+   `;
+
+   return;
+  }
+
+  c.innerHTML=
+
+   (data||[]).map(x=>`
+
+    <div class="admin-item">
+
+     <div class="row">
+
+      <div>
+
+       <b>
+        ${esc(x.username)}
+       </b>
+
+       <span class="status">
+        ${esc(x.role)}
+       </span>
+
+       <br>
+
+       <span class="small">
+        ${esc(x.id)}
+       </span>
+
+       <br>
+
+       Số dư:
+       ${money(x.balance)}
+
+      </div>
+
+      <button
+       onclick="banUser('${x.id}')">
+       🚫 Ban
+      </button>
+
+     </div>
+
+    </div>
+
+   `).join("")
+   ||
+   "<p>Không có tài khoản.</p>";
+
+ }
+
+}
+
+
+/* =========================
+   NEW CATEGORY
+========================= */
+
+function newCategory(){
+
+ openModal(`
+
+  <div class="modal-head">
+
+   <h2>
+    ＋ Danh mục mới
+   </h2>
+
+   <button
+    class="close"
+    onclick="closeModal()">
+    ×
+   </button>
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Tên danh mục
+   </label>
+
+   <input
+    id="cn"
+    placeholder="Túi mù 99K">
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Giá
+   </label>
+
+   <input
+    id="cp"
+    type="number"
+    value="99000">
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Link ảnh
+   </label>
+
+   <input
+    id="ci"
+    placeholder="https://...">
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Ghi chú
+   </label>
+
+   <textarea
+    id="co"
+    placeholder="Mô tả danh mục">
+   </textarea>
+
+  </div>
+
+  <button
+   class="primary"
+   style="width:100%;padding:13px;border-radius:12px"
+   onclick="saveCategory()">
+
+   Tạo danh mục
+
+  </button>
+
+ `);
+}
+
 async function saveCategory(){
- const {error}=await sb.from("categories").insert({name:document.querySelector("#cn").value.trim(),price:+document.querySelector("#cp").value,image_url:document.querySelector("#ci").value.trim()||null,note:document.querySelector("#co").value.trim()||null});
- if(error)return toast(error.message,"danger");closeModal();toast("Đã tạo danh mục","success");openAdmin();loadCategories();
+
+ const name=
+ document.querySelector("#cn")
+ .value.trim();
+
+ const price=
+ +document.querySelector("#cp")
+ .value;
+
+ const image_url=
+ document.querySelector("#ci")
+ .value.trim();
+
+ const note=
+ document.querySelector("#co")
+ .value.trim();
+
+ if(!name||!price){
+
+  return toast(
+   "Nhập tên và giá danh mục",
+   "danger"
+  );
+
+ }
+
+ const {
+  error
+ }=await sb
+  .from("categories")
+  .insert({
+   name,
+   price,
+   image_url:image_url||null,
+   note:note||null,
+   active:true
+  });
+
+ if(error){
+
+  console.error(
+   "SAVE CATEGORY ERROR:",
+   error
+  );
+
+  return toast(
+   error.message,
+   "danger"
+  );
+ }
+
+ closeModal();
+
+ toast(
+  "Đã tạo danh mục",
+  "success"
+ );
+
+ loadCategories();
+
+ openAdmin();
 }
+
+
+/* =========================
+   MANAGE ACCOUNTS
+========================= */
+
 async function manageCategory(id){
- const {data:c}=await sb.from("categories").select("*").eq("id",id).single();const {data:a}=await sb.from("accounts").select("*").eq("category_id",id).order("created_at",{ascending:false});
- openModal(`<div class="modal-head"><h2>📦 ${esc(c.name)}</h2><button class="close" onclick="closeModal()">×</button></div>
- <p>${money(c.price)} · ${esc(c.note||"")}</p><button class="primary" style="padding:11px 14px;border-radius:12px" onclick="addAccount('${id}')">＋ Thêm acc</button>
- <div style="margin-top:15px">${(a||[]).map(x=>`<div class="admin-item"><b>${esc(x.username)}</b><br><span class="muted">Mật khẩu: ${esc(x.password)}</span><br><span class="status ${x.sold?"danger":"success"}">${x.sold?"Đã xé":"Còn hàng"}</span></div>`).join("")||"<p class='muted'>Chưa có acc.</p>"}</div>`);
+
+ const {
+  data:c,
+  error:categoryError
+ }=await sb
+  .from("categories")
+  .select("*")
+  .eq("id",id)
+  .single();
+
+ if(categoryError){
+
+  return toast(
+   categoryError.message,
+   "danger"
+  );
+ }
+
+ const {
+  data:a,
+  error:accountError
+ }=await sb
+  .from("accounts")
+  .select("*")
+  .eq("category_id",id)
+  .order("created_at",{ascending:false});
+
+ if(accountError){
+
+  return toast(
+   accountError.message,
+   "danger"
+  );
+ }
+
+ openModal(`
+
+  <div class="modal-head">
+
+   <h2>
+    📦 ${esc(c.name)}
+   </h2>
+
+   <button
+    class="close"
+    onclick="closeModal()">
+    ×
+   </button>
+
+  </div>
+
+  <p>
+   ${money(c.price)}
+   ·
+   ${esc(c.note||"")}
+  </p>
+
+  <button
+   class="primary"
+   style="padding:11px 14px;border-radius:12px"
+   onclick="addAccount('${id}')">
+
+   ＋ Thêm acc
+
+  </button>
+
+  <div style="margin-top:15px">
+
+   ${
+    (a||[]).map(x=>`
+
+     <div class="admin-item">
+
+      <b>
+       ${esc(x.username)}
+      </b>
+
+      <br>
+
+      <span class="muted">
+       Mật khẩu:
+       ${esc(x.password)}
+      </span>
+
+      <br>
+
+      <span class="
+       status
+       ${x.sold?"danger":"success"}
+      ">
+
+       ${
+        x.sold
+        ?
+        "Đã xé"
+        :
+        "Còn hàng"
+       }
+
+      </span>
+
+     </div>
+
+    `).join("")
+    ||
+    `
+     <p class="muted">
+      Chưa có acc.
+     </p>
+    `
+   }
+
+  </div>
+
+ `);
 }
-function addAccount(id){openModal(`<div class="modal-head"><h2>＋ Thêm acc</h2><button class="close" onclick="closeModal()">×</button></div><div class="field"><label>Tài khoản</label><input id="au"></div><div class="field"><label>Mật khẩu</label><input id="ap"></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="saveAccount('${id}')">Thêm acc</button>`)}
+
+function addAccount(id){
+
+ openModal(`
+
+  <div class="modal-head">
+
+   <h2>
+    ＋ Thêm acc
+   </h2>
+
+   <button
+    class="close"
+    onclick="closeModal()">
+    ×
+   </button>
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Tài khoản
+   </label>
+
+   <input
+    id="au"
+    placeholder="Username Roblox">
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Mật khẩu
+   </label>
+
+   <input
+    id="ap"
+    type="text"
+    placeholder="Password Roblox">
+
+  </div>
+
+  <button
+   class="primary"
+   style="width:100%;padding:13px;border-radius:12px"
+   onclick="saveAccount('${id}')">
+
+   Thêm acc
+
+  </button>
+
+ `);
+}
+
 async function saveAccount(id){
- const username=document.querySelector("#au").value.trim(),password=document.querySelector("#ap").value;if(!username||!password)return toast("Nhập đủ tài khoản và mật khẩu","danger");
- const {error}=await sb.from("accounts").insert({category_id:id,username,password});if(error)return toast(error.message,"danger");toast("Đã thêm acc","success");manageCategory(id);
+
+ const username=
+ document.querySelector("#au")
+ .value.trim();
+
+ const password=
+ document.querySelector("#ap")
+ .value;
+
+ if(!username||!password){
+
+  return toast(
+   "Nhập đủ tài khoản và mật khẩu",
+   "danger"
+  );
+ }
+
+ const {
+  error
+ }=await sb
+  .from("accounts")
+  .insert({
+   category_id:id,
+   username,
+   password
+  });
+
+ if(error){
+
+  console.error(
+   "SAVE ACCOUNT ERROR:",
+   error
+  );
+
+  return toast(
+   error.message,
+   "danger"
+  );
+ }
+
+ toast(
+  "Đã thêm acc",
+  "success"
+ );
+
+ await manageCategory(id);
 }
+
+
+/* =========================
+   PROCESS TOPUP
+========================= */
+
 async function processTopup(id,approve){
- const {error}=await sb.rpc("admin_process_topup",{p_topup_id:id,p_approve:approve,p_note:approve?"Đã duyệt":"Admin từ chối"});
- if(error)return toast(error.message,"danger");toast(approve?"Đã cộng tiền":"Đã từ chối","success");openAdmin();
+
+ const {
+  error
+ }=await sb.rpc(
+  "admin_process_topup",
+  {
+   p_topup_id:id,
+   p_approve:approve,
+   p_note:
+    approve
+    ?
+    "Đã duyệt"
+    :
+    "Admin từ chối"
+  }
+ );
+
+ if(error){
+
+  console.error(
+   "PROCESS TOPUP ERROR:",
+   error
+  );
+
+  return toast(
+   error.message,
+   "danger"
+  );
+ }
+
+ toast(
+  approve
+  ?
+  "Đã duyệt và cộng tiền"
+  :
+  "Đã từ chối",
+  "success"
+ );
+
+ await openAdmin();
 }
+
+
+/* =========================
+   BAN
+========================= */
+
 function banUser(id){
- openModal(`<div class="modal-head"><h2>🚫 Ban tài khoản</h2><button class="close" onclick="closeModal()">×</button></div><div class="field"><label>Số ngày</label><input id="bd" type="number" value="7"></div><div class="field"><label>Giờ</label><input id="bh" type="number" value="0"></div><div class="field"><label>Phút</label><input id="bm" type="number" value="0"></div><div class="field"><label>Giây</label><input id="bs" type="number" value="0"></div><div class="field"><label>Nội dung</label><textarea id="bmsg">Tài khoản của bạn đã bị khóa.</textarea></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="doBan('${id}')">Ban tài khoản</button>`);
+
+ openModal(`
+
+  <div class="modal-head">
+
+   <h2>
+    🚫 Ban tài khoản
+   </h2>
+
+   <button
+    class="close"
+    onclick="closeModal()">
+    ×
+   </button>
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Số ngày
+   </label>
+
+   <input
+    id="bd"
+    type="number"
+    value="7"
+    min="0">
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Giờ
+   </label>
+
+   <input
+    id="bh"
+    type="number"
+    value="0"
+    min="0">
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Phút
+   </label>
+
+   <input
+    id="bm"
+    type="number"
+    value="0"
+    min="0">
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Giây
+   </label>
+
+   <input
+    id="bs"
+    type="number"
+    value="0"
+    min="0">
+
+  </div>
+
+  <div class="field">
+
+   <label>
+    Nội dung
+   </label>
+
+   <textarea id="bmsg">Tài khoản của bạn đã bị khóa.</textarea>
+
+  </div>
+
+  <button
+   class="primary"
+   style="width:100%;padding:13px;border-radius:12px"
+   onclick="doBan('${id}')">
+
+   Ban tài khoản
+
+  </button>
+
+ `);
 }
+
 async function doBan(id){
- const seconds=((+document.querySelector("#bd").value||0)*86400)+((+document.querySelector("#bh").value||0)*3600)+((+document.querySelector("#bm").value||0)*60)+(+document.querySelector("#bs").value||0);
- const {error}=await sb.rpc("admin_ban_user",{p_user_id:id,p_seconds:seconds,p_message:document.querySelector("#bmsg").value});if(error)return toast(error.message,"danger");closeModal();toast("Đã ban tài khoản","success");openAdmin();
+
+ const seconds=
+  ((+document.querySelector("#bd").value||0)*86400)+
+  ((+document.querySelector("#bh").value||0)*3600)+
+  ((+document.querySelector("#bm").value||0)*60)+
+  (+document.querySelector("#bs").value||0);
+
+ if(seconds<=0){
+
+  return toast(
+   "Thời gian ban phải lớn hơn 0",
+   "danger"
+  );
+ }
+
+ const {
+  error
+ }=await sb.rpc(
+  "admin_ban_user",
+  {
+   p_user_id:id,
+   p_seconds:seconds,
+   p_message:
+    document.querySelector("#bmsg").value
+  }
+ );
+
+ if(error){
+
+  return toast(
+   error.message,
+   "danger"
+  );
+ }
+
+ closeModal();
+
+ toast(
+  "Đã ban tài khoản",
+  "success"
+ );
+
+ openAdmin();
 }
-sb.auth.onAuthStateChange(()=>setTimeout(refreshUser,0));
-refreshUser();loadCategories();
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+sb.auth.onAuthStateChange(()=>{
+ setTimeout(
+  refreshUser,
+  0
+ );
+});
+
+
+/* =========================
+   START
+========================= */
+
+refreshUser();
+loadCategories();
+
 </script>
+
 </body>
-    </html>
+ </html>
