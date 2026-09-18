@@ -97,6 +97,8 @@ function openProfile(){openModal(`<div class="modal-head"><h2>👤 Tài khoản<
 function openZalo(){openModal(`<div class="modal-head"><h2>💬 Zalo</h2><button class="close" onclick="closeModal()">×</button></div><p style="text-align:center">Quét mã QR để kết nối Zalo.</p><img class="qr" src="data:image/webp;base64,${QR_DATA}" alt="Zalo QR"><p class="small muted" style="text-align:center">QR lấy từ ảnh Zalo bạn đã gửi.</p>`)}
 async function openAdmin(){if(currentProfile?.role!=="admin")return toast("Không có quyền","danger");document.querySelector("#shop").classList.add("hidden");let a=document.querySelector("#admin");a.classList.remove("hidden");a.innerHTML=`<div class="hero"><h1>⚙ Admin Dashboard</h1><p>Quản lý shop, acc, nạp thẻ, người dùng và đóng/mở website.</p></div><div class="tabs"><button class="active" onclick="adminTab('cats',this)">Danh mục</button><button onclick="adminTab('tops',this)">Nạp thẻ</button><button onclick="adminTab('users',this)">Tài khoản</button><button onclick="adminTab('orders',this)">Đơn hàng</button><button onclick="adminTab('site',this)">Website</button></div><div id="adminContent"></div>`;adminTab("cats",document.querySelector(".tabs button"))}
 async function adminTab(tab,btn){
+ if(tab==='serviceorders') tab='orders';
+ if(tab==='servicecats') tab='cats';
  document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("active"));btn.classList.add("active");
  let c=document.querySelector("#adminContent");
  if(tab==='cats'){
