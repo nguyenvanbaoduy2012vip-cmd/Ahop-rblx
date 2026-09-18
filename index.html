@@ -57,7 +57,7 @@ async function submitServiceOrder(categoryId,packageId){
  if(!currentUser)return openAuth("login");
  let account=document.querySelector("#soAccount").value.trim(),password=document.querySelector("#soPassword").value,content=document.querySelector("#soContent").value.trim();
  if(!account||!password)return toast("Nhập tài khoản và mật khẩu","danger");
- let {error}=await sb.rpc("bd_shop_create_service_order_package",{p_category_id:categoryId,p_package_id:packageId,p_account:account,p_password:password,p_content:content||null});
+ let {error}=await sb.rpc("bd_shop_create_service_order",{p_package_id:packageId,p_account:account,p_password:password,p_content:content||null});
  if(error)return toast(error.message,"danger");
  closeModal();toast("Đặt đơn thành công 🎉","success");await refreshUser();
 }
