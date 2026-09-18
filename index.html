@@ -3,7 +3,48 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>BD Roblox Shop</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+async function changeUserMoney(username, direction){
+  if(!isAdmin){ alert('Chỉ admin mới được dùng chức năng này.'); return; }
+
+  const raw = prompt((direction===1?'Cộng tiền cho ':'Trừ tiền của ')+username+'\\nNhập số tiền:');
+  if(raw===null) return;
+
+  const amount = Number(raw);
+  if(!Number.isFinite(amount) || amount<=0){
+    alert('Số tiền không hợp lệ.');
+    return;
+  }
+
+  const delta = direction===1 ? amount : -amount;
+  if(!confirm((direction===1?'Cộng ':'Trừ ')+money(amount)+' cho '+username+'?')) return;
+
+  try{
+    const {data:user,error:readErr}=await sb.from('users')
+      .select('username,balance').eq('username',username).single();
+    if(readErr) throw readErr;
+
+    const current = Number(user.balance)||0;
+    const next = current + delta;
+
+    if(next < 0){
+      alert('Không thể trừ vượt quá số dư hiện tại.');
+      return;
+    }
+
+    const {error:updateErr}=await sb.from('users')
+      .update({balance:next}).eq('username',username);
+    if(updateErr) throw updateErr;
+
+    alert((direction===1?'Đã cộng ':'Đã trừ ')+money(amount)+' cho '+username+'.');
+    location.reload();
+  }catch(e){
+    console.error(e);
+    alert('Không thể cập nhật tiền: '+(e.message||e));
+  }
+}
+
+</script>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#fff6f6,#f7f8fa);color:#241b1b}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}header{position:sticky;top:0;z-index:30;background:#fffafaee;backdrop-filter:blur(14px);border-bottom:1px solid #f0dada}.nav{max-width:1150px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}.logo{font-size:21px;font-weight:900;color:#c71919;margin-right:auto}.logo span{color:#222}.nav button{background:#fff;border:1px solid #ead5d5;padding:9px 13px;border-radius:999px}.primary{background:#c71919!important;color:#fff!important;border-color:#c71919!important}.container{max-width:1150px;margin:auto;padding:22px 18px 60px}.hero{padding:27px;border-radius:25px;background:linear-gradient(135deg,#c71919,#e94343);color:#fff;box-shadow:0 15px 40px #b9000020;margin-bottom:22px}.hero h1{margin:0 0 8px;font-size:33px}.hero p{margin:0;opacity:.9}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:16px}.card{background:#fff;border:1px solid #eddede;border-radius:20px;overflow:hidden;box-shadow:0 8px 25px #9b00000d}.card img{width:100%;height:155px;object-fit:cover;background:#f5eeee}.card-body{padding:16px}.card h3{margin:0 0 7px}.price{color:#c71919;font-weight:900;font-size:19px}.muted{color:#786d6d;font-size:14px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.actions button{padding:10px 13px;border-radius:12px}.empty{text-align:center;padding:40px;background:#fff;border:1px dashed #dfbcbc;border-radius:18px}.modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:18px;z-index:80}.modal.show{display:flex}.modal-box{width:min(570px,100%);max-height:91vh;overflow:auto;background:#fff;border-radius:24px;padding:22px}.modal-head{display:flex;align-items:center;gap:10px}.modal-head h2{margin:0;flex:1}input,textarea,select{width:100%;padding:12px;border:1px solid #dfcaca;border-radius:12px;outline:none;background:#fff;margin-top:6px}input:focus,textarea:focus,select:focus{border-color:#c71919}.field{margin:12px 0}.field label{font-weight:700;font-size:14px}.close{background:#f5eeee;padding:8px 12px;border-radius:50%}.tabs{display:flex;gap:8px;overflow:auto;margin-bottom:16px}.tabs button{white-space:nowrap;background:#fff;border:1px solid #ead5d5;padding:10px 15px;border-radius:999px}.tabs button.active{background:#c71919;color:#fff}.row{display:flex;gap:10px;align-items:center;justify-content:space-between}.balance{font-weight:900;color:#c71919}.admin-item{padding:13px;border:1px solid #eddede;border-radius:15px;margin:9px 0;background:#fff}.status{display:inline-block;padding:5px 9px;border-radius:999px;background:#f8eaea;font-size:12px;font-weight:700}.success{background:#e8f8ed;color:#18733b}.danger{background:#fde7e7;color:#a90000}.warn{background:#fff4d9;color:#8b5a00}.result{background:#fff5f5;border:1px solid #efcaca;border-radius:18px;padding:18px;margin-top:15px}.credential{word-break:break-all;background:#fff;padding:10px;border-radius:10px;border:1px solid #eee;margin:6px 0}.hidden{display:none!important}.small{font-size:13px}#toast{position:fixed;right:16px;bottom:16px;z-index:120;display:flex;flex-direction:column;gap:9px}.toast{background:#241b1b;color:#fff;padding:13px 16px;border-radius:14px;box-shadow:0 10px 30px #0003}.toast.danger{background:#a90000}.toast.success{background:#18733b}.closed{padding:45px 20px;text-align:center;background:#fff;border:2px solid #efbcbc;border-radius:24px;box-shadow:0 12px 35px #90000010}.closed h1{font-size:34px;margin:0 0 10px;color:#b00000}.zalo-logo{width:24px;height:24px;border-radius:7px;object-fit:cover;vertical-align:middle}.qr{display:block;width:min(320px,90%);margin:15px auto;border-radius:18px}.switch{display:flex;gap:8px;align-items:center}.switch input{width:auto;margin:0}@media(max-width:650px){.hero h1{font-size:27px}.grid{grid-template-columns:1fr 1fr}.card img{height:120px}.nav{gap:6px}.nav button{padding:8px 10px}}
 
@@ -13,6 +54,9 @@
 .cred-btn{border:1px solid #ddd;background:#fff;border-radius:9px;padding:7px 9px;cursor:pointer;font-size:14px}
 .cred-btn:hover{background:#f5f5f5}
 .password-text.is-hidden{letter-spacing:3px}
+
+.money-controls{display:inline-flex;gap:5px;margin-left:6px}
+.money-controls .btn{min-width:34px;padding:5px 9px;font-weight:700}
 </style></head>
 <body>
 <header><div class="nav"><div class="logo">BD <span>ROBLOX SHOP</span></div><button onclick="showSection('shop')">Shop</button><button onclick="openTopup()">💳 Nạp thẻ</button><button onclick="openHistory()">📜 Lịch sử</button><button title="Zalo" onclick="openZalo()"><img class="zalo-logo" src="https://img.icons8.com/bubbles/1200/zalo.jpg" alt="Zalo"></button><span id="userArea"></span></div></header>
@@ -70,7 +114,11 @@ async function adminTab(tab,btn){
  }else if(tab==='tops'){
   let {data,error}=await sb.from("bd_shop_topups").select("*,bd_shop_profiles(username)").order("created_at",{ascending:false});
   if(error){c.innerHTML=`<p>${esc(error.message)}</p>`;return}
-  c.innerHTML=(data||[]).map(x=>`<div class="admin-item"><b>${esc(x.bd_shop_profiles?.username||x.user_id)}</b> · ${esc(x.card_type)} · ${money(x.card_value)}<br>Serial: <code>${esc(x.serial)}</code><br>Mã: <code>${esc(x.card_code)}</code><br><span class="status ${x.status==='success'?'success':x.status==='rejected'?'danger':'warn'}">${esc(statusLabel(x.status))}</span>${x.status==='pending'?` <button onclick="processTopup('${x.id}',true)">Duyệt</button> <button class="danger-btn" onclick="processTopup('${x.id}',false)">Từ chối</button>`:""}</div>`).join("")||"<p>Không có yêu cầu.</p>";
+  c.innerHTML=(data||[]).map(x=>`<div class="admin-item"><b>${esc(x.bd_shop_profiles?.username||x.user_id)}</b> · ${esc(x.card_type)} · ${money(x.card_value)}<br>Serial: <code>${esc(x.serial)}</code><br>Mã: <code>${esc(x.card_code)}</code><br><span class="status ${x.status==='success'?'success':x.status==='rejected'?'danger':'warn'}">${esc(statusLabel(x.status))}</span>
+          <div class="money-controls">
+            <button type="button" class="btn" onclick="changeUserMoney('${esc(x.username)}',1)">+</button>
+            <button type="button" class="btn" onclick="changeUserMoney('${esc(x.username)}',-1)">−</button>
+          </div>${x.status==='pending'?` <button onclick="processTopup('${x.id}',true)">Duyệt</button> <button class="danger-btn" onclick="processTopup('${x.id}',false)">Từ chối</button>`:""}</div>`).join("")||"<p>Không có yêu cầu.</p>";
  }else if(tab==='users'){
   let {data,error}=await sb.from("bd_shop_profiles").select("*").order("created_at",{ascending:false});
   if(error){c.innerHTML=`<p>${esc(error.message)}</p>`;return}
