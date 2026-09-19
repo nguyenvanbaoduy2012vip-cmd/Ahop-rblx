@@ -96,8 +96,31 @@ async function register(){let username=document.querySelector("#authUser").value
 async function login(){let email=document.querySelector("#authEmail").value.trim(),password=document.querySelector("#authPass").value;let {error}=await sb.auth.signInWithPassword({email,password});if(error)return toast(error.message,"danger");let {data:{user}}=await sb.auth.getUser();let p=await sb.from("bd_shop_profiles").select("id").eq("id",user.id).maybeSingle();if(!p.data)return sb.auth.signOut().then(()=>toast("Tài khoản này chưa đăng ký trên BD Roblox Shop mới.","danger"));closeModal();await refreshUser();toast("Đăng nhập thành công","success")}
 function showBan(){let until=new Date(currentProfile.banned_until);openModal(`<div class="modal-head"><h2>🚫 Tài Khoản Đã Bị Khóa</h2></div><div class="result"><h3>${esc(currentProfile.ban_message||"Tài khoản đã bị khóa.")}</h3><p>Thời gian còn lại: <b id="countdown"></b></p></div>`);let timer=setInterval(()=>{let s=Math.max(0,until-new Date()),t=Math.floor(s/1000),d=Math.floor(t/86400);t%=86400;let h=Math.floor(t/3600);t%=3600;let m=Math.floor(t/60),sec=t%60,el=document.querySelector("#countdown");if(el)el.textContent=`${d} ngày ${h} giờ ${m} phút ${sec} giây`;if(!s){clearInterval(timer);closeModal();refreshUser()}},1000)}
 async function loadCategories(){if(!sb)return;let {data,error}=await sb.from("bd_shop_categories").select("*").eq("active",true).order("created_at",{ascending:false});let box=document.querySelector("#categories");if(error){box.innerHTML=`<div class="empty">Không tải được danh mục: ${esc(error.message)}</div>`;return}if(!data?.length){box.innerHTML=`<div class="empty">Chưa có danh mục nào.</div>`;return}box.innerHTML=data.map(c=>`<article class="card">${c.image_url?`<img src="${esc(c.image_url)}" alt="">`:`<div style="height:155px;background:#f7eaea;display:grid;place-items:center;font-size:45px">🎁</div>`}<div class="card-body"><h3>${esc(c.name)}</h3><div class="price">${money(c.price)}</div><p class="muted">${esc(c.note||"")}</p><div class="actions"><button class="primary" onclick="openBag('${c.id}')">🎁 Xé túi</button></div></div></article>`).join("")}
-function copyCredential(value){
-  navigator.clipboard.writeText(value).then(()=>toast('Đã sao chép','success')).catch(()=>toast('Không thể sao chép','danger'));
+async function copyCredential(value){
+  value=String(value??'');
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(value);
+      toast('Đã sao chép','success');
+      return;
+    }
+  }catch(e){}
+  try{
+    const ta=document.createElement('textarea');
+    ta.value=value;
+    ta.setAttribute('readonly','');
+    ta.style.position='fixed';
+    ta.style.left='-9999px';
+    ta.style.top='0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0,ta.value.length);
+    const ok=document.execCommand('copy');
+    ta.remove();
+    if(ok){toast('Đã sao chép','success');return;}
+  }catch(e){}
+  toast('Không thể sao chép. Hãy nhấn giữ để sao chép.','danger');
 }
 function togglePassword(btn){
   const el=btn.closest('.cred-row').querySelector('.password-text');
