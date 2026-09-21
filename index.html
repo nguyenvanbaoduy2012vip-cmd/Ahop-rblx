@@ -15,9 +15,9 @@
 .password-text.is-hidden{letter-spacing:3px}
 </style></head>
 <body>
-<header><div class="nav"><div class="logo" onclick="showSection('shop')"><img id="customLogo" alt="Logo"><span id="logoText">BD <b style="color:#222">ROBLOX SHOP</b></span></div><button onclick="showSection('shop')">Shop</button><button onclick="openTopup()">💳 Nạp thẻ</button><button onclick="openHistory()">📜 Lịch sử</button><button onclick="openServiceOrders()">🧾 Các đơn hàng</button><button onclick="location.href='vong-quay.html'">🎡 Vòng quay</button><button onclick="location.href='rut-kim-cuong.html'">💎 Rút KC</button><button onclick="location.href='rut-robux.html'">💰 Rút Robux</button><button title="Zalo" onclick="openZalo()"><img class="zalo-logo" src="https://img.icons8.com/bubbles/1200/zalo.jpg" alt="Zalo"></button><span id="userArea"></span></div></header>
+<header><div class="nav"><div class="logo" onclick="showSection('shop')"><img id="customLogo" alt="Logo"><span id="logoText">BD <b style="color:#222">ROBLOX SHOP</b></span></div><button onclick="showSection('shop')">Shop</button><button onclick="openTopup()">💳 Nạp thẻ</button><button onclick="openHistory()">📜 Lịch sử</button><button onclick="openServiceOrders()">🧾 Các đơn hàng</button><button title="Zalo" onclick="openZalo()"><img class="zalo-logo" src="https://img.icons8.com/bubbles/1200/zalo.jpg" alt="Zalo"></button><span id="userArea"></span></div></header>
 <main class="container"><section id="shop"><div id="siteHero" class="hero"><h1 id="heroTitle">🎁 BD Roblox Shop</h1><p>Xé túi mù • Nhận acc ngẫu nhiên • Dữ liệu đồng bộ nhiều thiết bị</p></div><div id="closedBox" class="closed hidden"></div>
-<div id="categories" class="grid"><div class="empty">⏳ Đang tải Shop...</div></div>
+
 <div style="margin:30px 0 12px"><h2 style="margin:0 0 5px">🧾 Đặt đơn</h2><p class="muted" style="margin:0">Chọn dịch vụ, xem gói giá rồi đặt đơn.</p></div>
 <div id="serviceCategories" class="grid"><div class="empty">⏳ Đang tải dịch vụ...</div></div>
 </section><section id="admin" class="hidden"></section></main>
@@ -32,7 +32,7 @@ function toast(msg,type=""){let d=document.createElement("div");d.className="toa
 function openModal(html){document.querySelector("#modalBox").innerHTML=html;document.querySelector("#modal").classList.add("show")}
 function closeModal(){document.querySelector("#modal").classList.remove("show")}
 function initClient(){sb=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);return true}
-function showSection(x){document.querySelector("#shop").classList.toggle("hidden",x!=="shop");document.querySelector("#admin").classList.add("hidden");if(x==="shop"){loadCategories();loadServiceCategories()}}
+function showSection(x){document.querySelector("#shop").classList.toggle("hidden",x!=="shop");document.querySelector("#admin").classList.add("hidden");if(x==="shop"){loadServiceCategories()}}
 function authButtons(){let a=document.querySelector("#userArea");if(!currentUser){a.innerHTML=`<button onclick="openAuth('login')">Đăng nhập</button><button class="primary" onclick="openAuth('register')">Đăng ký</button>`;return}a.innerHTML=`<button onclick="openProfile()">👤 ${esc(currentProfile?.username||"Tài khoản")} · ${money(currentProfile?.balance||0)}</button><button onclick="signOut()">Thoát</button>${currentProfile?.role==="admin"?`<button class="primary" onclick="openAdmin()">⚙ Admin</button>`:""}`}
 async function loadServiceCategories(){
  if(!sb)return;
@@ -76,7 +76,7 @@ async function refreshUser(){
  currentUser=user||null;
  currentProfile=null;
  authButtons();
- const jobs=[loadCategories(),loadServiceCategories(),loadSiteSettings()];
+ const jobs=[loadServiceCategories(),loadSiteSettings()];
  if(user){
    jobs.push(sb.from("bd_shop_profiles").select("*").eq("id",user.id).single().then(r=>{
      currentProfile=r.data||null;
@@ -95,7 +95,7 @@ function openAuth(mode="login"){openModal(`<div class="modal-head"><h2>${mode===
 async function register(){let username=document.querySelector("#authUser").value.trim(),email=document.querySelector("#authEmail").value.trim(),password=document.querySelector("#authPass").value;if(!username||!email||password.length<6)return toast("Nhập đủ thông tin, mật khẩu ít nhất 6 ký tự","danger");let {data,error}=await sb.auth.signUp({email,password,options:{data:{username,bd_shop:"true"}}});if(error)return toast(error.message,"danger");closeModal();toast(data.session?"Đăng ký thành công":"Đăng ký thành công, kiểm tra email nếu Supabase đang bật xác minh","success");await refreshUser()}
 async function login(){let email=document.querySelector("#authEmail").value.trim(),password=document.querySelector("#authPass").value;let {error}=await sb.auth.signInWithPassword({email,password});if(error)return toast(error.message,"danger");let {data:{user}}=await sb.auth.getUser();let p=await sb.from("bd_shop_profiles").select("id").eq("id",user.id).maybeSingle();if(!p.data)return sb.auth.signOut().then(()=>toast("Tài khoản này chưa đăng ký trên BD Roblox Shop mới.","danger"));closeModal();await refreshUser();toast("Đăng nhập thành công","success")}
 function showBan(){let until=new Date(currentProfile.banned_until);openModal(`<div class="modal-head"><h2>🚫 Tài Khoản Đã Bị Khóa</h2></div><div class="result"><h3>${esc(currentProfile.ban_message||"Tài khoản đã bị khóa.")}</h3><p>Thời gian còn lại: <b id="countdown"></b></p></div>`);let timer=setInterval(()=>{let s=Math.max(0,until-new Date()),t=Math.floor(s/1000),d=Math.floor(t/86400);t%=86400;let h=Math.floor(t/3600);t%=3600;let m=Math.floor(t/60),sec=t%60,el=document.querySelector("#countdown");if(el)el.textContent=`${d} ngày ${h} giờ ${m} phút ${sec} giây`;if(!s){clearInterval(timer);closeModal();refreshUser()}},1000)}
-async function loadCategories(){if(!sb)return;let {data,error}=await sb.from("bd_shop_categories").select("*").eq("active",true).order("created_at",{ascending:false});let box=document.querySelector("#categories");if(error){box.innerHTML=`<div class="empty">Không tải được danh mục: ${esc(error.message)}</div>`;return}if(!data?.length){box.innerHTML=`<div class="empty">Chưa có danh mục nào.</div>`;return}box.innerHTML=data.map(c=>`<article class="card">${c.image_url?`<img src="${esc(c.image_url)}" alt="">`:`<div style="height:155px;background:#f7eaea;display:grid;place-items:center;font-size:45px">🎁</div>`}<div class="card-body"><h3>${esc(c.name)}</h3><div class="price">${money(c.price)}</div><p class="muted">${esc(c.note||"")}</p><div class="actions"><button class="primary" onclick="openBag('${c.id}')">🎁 Xé túi</button></div></div></article>`).join("")}
+async function loadCategories(){return;}
 async function copyCredential(value){
   value=String(value??'');
   try{
@@ -130,8 +130,6 @@ function togglePassword(btn){
   btn.textContent=hidden?'👁️':'🙈';
 }
 
-async function openBag(id){if(!currentUser)return openAuth("login");await refreshUser();if(currentProfile?.banned_until&&new Date(currentProfile.banned_until)>new Date())return showBan();if(siteSettings?.is_closed&&currentProfile?.role!=="admin")return toast("Website đang đóng","danger");let {data,error}=await sb.from("bd_shop_categories").select("*").eq("id",id).single();if(error)return toast(error.message,"danger");openModal(`<div class="modal-head"><h2>🎁 ${esc(data.name)}</h2><button class="close" onclick="closeModal()">×</button></div><p>${esc(data.note||"")}</p><p class="price">${money(data.price)}</p><p class="muted">Hệ thống sẽ chọn ngẫu nhiên 1 acc còn hàng.</p><button class="primary" style="width:100%;padding:14px;border-radius:13px" onclick="openRandom('${id}')">🔥 XÉ NGAY</button>`)}
-async function openRandom(categoryId){let {data,error}=await sb.rpc("bd_shop_open_random_account",{p_category_id:categoryId});if(error){let m=error.message.includes("OUT_OF_STOCK")?"Danh mục này đã hết acc.":error.message.includes("INSUFFICIENT_BALANCE")?"Số dư không đủ.":error.message.includes("SITE_CLOSED")?"Website đang đóng.":error.message.includes("BANNED")?"Tài khoản đang bị khóa.":error.message;return toast(m,"danger")}let x=data?.[0];if(!x)return toast("Không nhận được tài khoản","danger");openModal(`<div class="modal-head"><h2>🎉 Xé thành công!</h2></div><div class="result"><p><b>Tài khoản</b></p><div class="cred-row"><div class="credential">${esc(x.username)}</div><div class="cred-actions"><button class="cred-btn" onclick='copyCredential(${JSON.stringify(x.username)})'>📋 Sao chép</button></div></div><p><b>Mật khẩu</b></p><div class="cred-row"><div class="credential password-text is-hidden" data-password="${esc(x.password)}">••••••••</div><div class="cred-actions"><button class="cred-btn" onclick="togglePassword(this)">👁️</button><button class="cred-btn" onclick='copyCredential(${JSON.stringify(x.password)})'>📋</button></div></div><p class="muted">Đã trừ ${money(x.amount)}.</p></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="closeModal();refreshUser()">Đã nhận</button>`);toast("Xé túi thành công 🎉","success");await refreshUser()}
 function openTopup(){
  if(!currentUser)return openAuth("login");
  if(siteSettings?.is_closed&&currentProfile?.role!=="admin")return toast("Website đang đóng","danger");
@@ -140,16 +138,9 @@ function openTopup(){
 async function submitTopup(){let card_type=document.querySelector("#cardType").value,card_value=+document.querySelector("#cardValue").value,serial=document.querySelector("#serial").value.trim(),code=document.querySelector("#cardCode").value.trim();if(!serial||!code)return toast("Nhập Serial và mã nạp","danger");let {error}=await sb.rpc("bd_shop_submit_topup",{p_card_type:card_type,p_card_value:card_value,p_serial:serial,p_code:code});if(error)return toast(error.message,"danger");closeModal();toast("Đã gửi thẻ cho Admin xử lý","success")}
 async function openHistory(){
  if(!currentUser)return openAuth("login");
- openModal(`<div class="modal-head"><h2>📜 Lịch sử</h2><button class="close" onclick="closeModal()">×</button></div><div class="actions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button onclick="openRandomHistory()">🎁 Lịch sử random acc</button><button onclick="openTopupHistory()">💳 Lịch sử nạp thẻ</button><button onclick="openDiamondWithdrawHistory()">💎 Lịch sử rút Kim cương</button><button onclick="openRobuxWithdrawHistory()">💰 Lịch sử rút Robux</button><button onclick="openOrderHistory()">🧾 Lịch sử đặt đơn</button></div>`);
+ openModal(`<div class="modal-head"><h2>📜 Lịch sử</h2><button class="close" onclick="closeModal()">×</button></div><div class="actions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button onclick="openTopupHistory()">💳 Lịch sử nạp thẻ</button><button onclick="openOrderHistory()">🧾 Lịch sử đặt đơn</button></div>`);
 }
 function historyHead(title){return `<div class="modal-head"><h2>${title}</h2><button class="close" onclick="closeModal()">×</button></div>`}
-async function openRandomHistory(){
- if(!currentUser)return openAuth("login");
- openModal(historyHead("🎁 Lịch sử random acc")+`<p class="muted">Đang tải...</p>`);
- const {data,error}=await sb.from("bd_shop_random_history").select("*").eq("user_id",currentUser.id).order("created_at",{ascending:false});
- if(error)return openModal(historyHead("🎁 Lịch sử random acc")+`<p class="muted">${esc(error.message)}</p>`);
- openModal(historyHead("🎁 Lịch sử random acc")+(data?.length?data.map(o=>`<div class="admin-item"><b>${esc(o.account_username||"Acc ngẫu nhiên")}</b>${o.amount!=null?` · ${money(o.amount)}`:""}<br><span class="muted">${new Date(o.created_at).toLocaleString("vi-VN")}</span></div>`).join(""):"<p class='muted'>Chưa có lịch sử random acc.</p>"));
-}
 async function openTopupHistory(){
  if(!currentUser)return openAuth("login");
  openModal(historyHead("💳 Lịch sử nạp thẻ")+`<p class="muted">Đang tải...</p>`);
@@ -158,17 +149,6 @@ async function openTopupHistory(){
  if(a.error&&b.error)return openModal(historyHead("💳 Lịch sử nạp thẻ")+`<p class="muted">${esc(a.error.message)}</p>`);
  const status=s=>({pending:["Đang duyệt","warn"],success:["Thành công","success"],completed:["Hoàn thành","success"],rejected:["Đã từ chối","danger"],cancelled:["Đã hủy","danger"]}[s]||[s||"Không rõ",""]);
  openModal(historyHead("💳 Lịch sử nạp thẻ")+(data.length?data.map(o=>{let q=status(o.status);return `<div class="admin-item"><b>${esc(o.card_type||o.method||"Nạp thẻ")}</b> · ${money(o.card_value||o.amount||0)}<br><span class="status ${q[1]}">${q[0]}</span><br><span class="muted">${new Date(o.created_at).toLocaleString("vi-VN")}</span></div>`}).join(""):"<p class='muted'>Chưa có lịch sử nạp thẻ.</p>"));
-}
-async function openDiamondWithdrawHistory(){return openWithdrawHistory("diamond")}
-async function openRobuxWithdrawHistory(){return openWithdrawHistory("robux")}
-async function openWithdrawHistory(currency){
- if(!currentUser)return openAuth("login");
- const title=currency==="diamond"?"💎 Lịch sử rút Kim cương":"💰 Lịch sử rút Robux";
- openModal(historyHead(title)+`<p class="muted">Đang tải...</p>`);
- const {data,error}=await sb.from("bd_shop_withdrawals").select("*").eq("user_id",currentUser.id).eq("currency",currency).order("created_at",{ascending:false});
- if(error)return openModal(historyHead(title)+`<p class="muted">${esc(error.message)}</p>`);
- const status=s=>({pending:["Đang duyệt","warn"],processing:["Đang xử lý","warn"],completed:["Hoàn thành","success"],rejected:["Đã từ chối","danger"],cancelled:["Đã hủy","danger"]}[s]||[s||"Không rõ",""]);
- openModal(historyHead(title)+(data?.length?data.map(o=>{let q=status(o.status);return `<div class="admin-item"><b>${Number(o.amount).toLocaleString("vi-VN")}</b><br>Nhận: ${esc(o.receive_info)}<br><span class="status ${q[1]}">${q[0]}</span>${o.admin_note?`<br>${esc(o.admin_note)}`:""}<br><span class="muted">${new Date(o.created_at).toLocaleString("vi-VN")}</span></div>`}).join(""):"<p class='muted'>Chưa có yêu cầu rút.</p>"));
 }
 async function openOrderHistory(){
  if(!currentUser)return openAuth("login");
@@ -183,7 +163,7 @@ async function openOrderHistory(){
 function openProfile(){
  if(!currentUser)return openAuth("login");
  let w=currentProfile||{};
- openModal(`<div class="modal-head"><h2>👤 Tài khoản</h2><button class="close" onclick="closeModal()">×</button></div><p>Tên: <b>${esc(w.username||"")}</b></p><p>ID: <code>${esc(currentUser.id)}</code></p><p>Số dư: <b class="balance">${money(w.balance||0)}</b></p><div class="admin-item"><b>💎 Kim cương:</b> ${Number(w.diamond_balance||0).toLocaleString("vi-VN")}</div><div class="admin-item"><b>💰 Robux:</b> ${Number(w.robux_balance||0).toLocaleString("vi-VN")}</div><h3 style="margin-top:18px">Lịch sử tài khoản</h3><div class="actions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button onclick="openRandomHistory()">🎁 Random acc</button><button onclick="openTopupHistory()">💳 Nạp thẻ</button><button onclick="openDiamondWithdrawHistory()">💎 Rút Kim cương</button><button onclick="openRobuxWithdrawHistory()">💰 Rút Robux</button><button onclick="openOrderHistory()">🧾 Đặt đơn</button></div><div class="actions"><button onclick="location.href='vong-quay.html'">🎡 Vòng quay</button><button onclick="location.href='rut-kim-cuong.html'">💎 Rút Kim cương</button><button onclick="location.href='rut-robux.html'">💰 Rút Robux</button></div>`);
+ openModal(`<div class="modal-head"><h2>👤 Tài khoản</h2><button class="close" onclick="closeModal()">×</button></div><p>Tên: <b>${esc(w.username||"")}</b></p><p>ID: <code>${esc(currentUser.id)}</code></p><p>Số dư: <b class="balance">${money(w.balance||0)}</b></p><h3 style="margin-top:18px">Lịch sử tài khoản</h3><div class="actions" style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><button onclick="openTopupHistory()">💳 Nạp thẻ</button><button onclick="openOrderHistory()">🧾 Đặt đơn</button></div>`);
 }
 function openZalo(){openModal(`<div class="modal-head"><h2>💬 Zalo</h2><button class="close" onclick="closeModal()">×</button></div><p style="text-align:center">Quét mã QR để kết nối Zalo.</p><img class="qr" src="data:image/webp;base64,${QR_DATA}" alt="Zalo QR"><p class="small muted" style="text-align:center">QR lấy từ ảnh Zalo bạn đã gửi.</p>`)}
 async function openAdmin(){if(currentProfile?.role!=="admin")return toast("Không có quyền","danger");document.querySelector("#shop").classList.add("hidden");let a=document.querySelector("#admin");a.classList.remove("hidden");a.innerHTML=`<div class="hero"><h1>⚙ Admin Dashboard</h1><p>Quản lý shop, acc, nạp thẻ, người dùng và đóng/mở website.</p></div><div class="tabs"><button class="active" onclick="adminTab('cats',this)">Danh mục</button><button onclick="adminTab('tops',this)">Nạp thẻ</button><button onclick="adminTab('users',this)">Tài khoản</button><button onclick="adminTab('orders',this)">Đơn hàng</button><button onclick="adminTab('site',this)">Website</button></div><div id="adminContent"></div>`;adminTab("cats",document.querySelector(".tabs button"))}
