@@ -1,0 +1,1 @@
+(async()=>{const x=await me();const el=document.querySelector('#accountNav');if(el)el.innerHTML=x?`<a href="account.html">👤 ${esc(x.profile.username||'Tài khoản')}</a>`:`<a href="index.html">Đăng nhập</a>`;})();
