@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title id="pageTitle">BDUY X TUẤN KIỆT</title><link id="siteFavicon" rel="icon" href="data:,">
+<title id="pageTitle">BD Roblox Shop</title><link id="siteFavicon" rel="icon" href="data:,">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#fff6f6,#f7f8fa);color:#241b1b}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}header{position:sticky;top:0;z-index:30;background:#fffafaee;backdrop-filter:blur(14px);border-bottom:1px solid #f0dada}.nav{max-width:1150px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}.logo{font-size:21px;font-weight:900;color:#c71919;margin-right:auto;display:flex;align-items:center;gap:8px;cursor:pointer}.logo span{color:#222}.logo img{width:38px;height:38px;border-radius:10px;object-fit:cover;display:none;box-shadow:0 4px 14px #0002}.nav button{background:#fff;border:1px solid #ead5d5;padding:9px 13px;border-radius:999px}.primary{background:#c71919!important;color:#fff!important;border-color:#c71919!important}.container{max-width:1150px;margin:auto;padding:22px 18px 60px}.hero{padding:27px;border-radius:25px;background:linear-gradient(135deg,#c71919,#e94343);color:#fff;box-shadow:0 15px 40px #b9000020;margin-bottom:22px}.hero h1{margin:0 0 8px;font-size:33px}.hero p{margin:0;opacity:.9}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:16px}.card{background:#fff;border:1px solid #eddede;border-radius:20px;overflow:hidden;box-shadow:0 8px 25px #9b00000d}.card img{width:100%;height:155px;object-fit:cover;background:#f5eeee}.card-body{padding:16px}.card h3{margin:0 0 7px}.price{color:#c71919;font-weight:900;font-size:19px}.muted{color:#786d6d;font-size:14px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.actions button{padding:10px 13px;border-radius:12px}.modal-box button.primary{border-radius:12px!important;padding:10px 14px!important}.service-order-btn{display:inline-flex;align-items:center;justify-content:center;min-width:105px;border-radius:14px!important;padding:11px 18px!important;font-weight:800;line-height:1.2;background:#c71919!important;color:#fff!important;border:1px solid #c71919!important;box-shadow:0 5px 14px #c7191928;transition:transform .15s,box-shadow .15s,filter .15s}.service-order-btn:hover{transform:translateY(-1px);box-shadow:0 7px 18px #c7191938;filter:brightness(1.05)}.service-order-btn:active{transform:translateY(0);box-shadow:0 3px 9px #c7191928}
@@ -30,9 +30,59 @@ body{padding-bottom:82px}
 @media(min-width:900px){.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(560px,calc(100% - 24px));border:1px solid #eedada;border-bottom:0;border-radius:18px 18px 0 0}}
 @media(max-width:650px){.container{padding:14px 10px 30px}.nav{padding:9px 10px}.logo{font-size:17px}.nav button{font-size:12px}.site-footer{padding:18px 12px 12px}}
 
+
+/* Header gọn kiểu shop: logo + Zalo + tài khoản */
+.nav{max-width:1150px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:nowrap}
+.logo{min-width:0;max-width:58%;font-size:21px;gap:10px;flex:1}
+.logo img{width:190px;height:64px;max-width:100%;object-fit:contain;object-position:left center;border-radius:14px;flex-shrink:1}
+.logo span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-shrink:0}
+.header-actions #userArea{display:flex;align-items:center;gap:8px}
+.header-actions button{border:1px solid #c71919;border-radius:999px;padding:10px 17px;font-weight:800;color:#c71919;background:#fff;white-space:nowrap}
+.header-actions button.primary{background:#c71919!important;color:#fff!important}
+.zalo-button{display:inline-flex;align-items:center;gap:7px}
+.zalo-logo{width:32px;height:32px;border-radius:50%;object-fit:cover;vertical-align:middle}
+@media(max-width:650px){.nav{padding:9px 10px;gap:8px}.logo{font-size:15px;gap:6px;max-width:58%}.logo img{width:150px;height:54px}.header-actions{gap:6px}.header-actions #userArea{gap:5px}.header-actions button{padding:9px 11px;font-size:12px}.zalo-button{padding:5px 9px!important;gap:4px}.zalo-logo{width:34px;height:34px}.zalo-button span{display:none}}
+@media(max-width:380px){.logo{font-size:13px;max-width:55%}.logo img{width:125px;height:48px}.header-actions button{padding:8px 9px;font-size:11px}}
+
+
+/* Responsive polish: compact header, flexible bottom navigation */
+.nav{width:100%;min-width:0}
+.logo{overflow:hidden}
+.logo img{object-fit:contain}
+.header-actions{min-width:0}
+.header-actions #userArea{min-width:0;flex-wrap:wrap;justify-content:flex-end}
+.bottom-nav{width:100%;max-width:100%;}
+@media(max-width:650px){
+  .nav{padding:8px 10px;gap:7px}
+  .logo{max-width:52%;font-size:15px;flex:1 1 auto;gap:5px}
+  .logo img{width:clamp(100px,32vw,150px);height:48px}
+  .header-actions{gap:5px}
+  .header-actions #userArea{gap:4px}
+  .header-actions button{padding:8px 9px;font-size:11px}
+  .zalo-button{padding:5px 7px!important}
+  .zalo-button span{display:none}
+  .zalo-logo{width:30px;height:30px}
+  .bottom-nav{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;padding:6px max(6px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left))}
+  .bottom-nav button{font-size:clamp(9px,2.6vw,11px);padding:6px 1px;gap:3px}
+  .bottom-nav button .nav-icon{width:21px;height:21px}
+  body{padding-bottom:76px}
+}
+@media(max-width:380px){
+  .logo{max-width:48%;font-size:13px}
+  .logo img{width:100px;height:42px}
+  .header-actions button{padding:7px 8px;font-size:10px}
+  .bottom-nav button{font-size:9px}
+}
+@media(min-width:900px){
+  .nav{padding:12px 18px}
+  .logo{max-width:65%}
+  .header-actions #userArea{flex-wrap:nowrap}
+  .bottom-nav{width:min(560px,calc(100% - 24px))}
+}
 </style></head>
 <body>
-<header><div class="nav"><div class="logo" onclick="showSection('shop')"><img id="customLogo" alt="Logo"><span id="logoText">BD <b style="color:#222">ROBLOX SHOP</b></span></div><button onclick="showSection('shop')">Shop</button><button onclick="openTopup()">💳 Nạp thẻ</button><button onclick="openHistory()">📜 Lịch sử</button><button onclick="openServiceOrders()">🧾 Các đơn hàng</button><button title="Zalo" onclick="openZalo()"><img class="zalo-logo" src="https://img.icons8.com/bubbles/1200/zalo.jpg" alt="Zalo"></button><span id="userArea"></span></div></header>
+<header><div class="nav"><div class="logo" onclick="showSection('shop')"><img id="customLogo" alt="Logo"><span id="logoText">BD <b style="color:#222">ROBLOX SHOP</b></span></div><div class="header-actions"><button class="zalo-button" title="Liên hệ Zalo" onclick="openZalo()"><img class="zalo-logo" src="https://img.icons8.com/bubbles/1200/zalo.jpg" alt="Zalo"><span>Zalo</span></button><span id="userArea"></span></div></div></header>
 <main class="container"><section id="shop"><div id="siteHero" class="hero"><h1 id="heroTitle">BDUY X TUAN KIET SHOP</h1><p>BDUY X TUAN KIET - KẾT HỢP VỚI NGUYỄN TUẤN KIỆT</p></div><div id="closedBox" class="closed hidden"></div>
 <div id="categories" class="grid"><div class="empty">⏳ Đang tải Shop...</div></div>
 <div style="margin:30px 0 12px"><h2 style="margin:0 0 5px">🧾 Đặt đơn</h2><p class="muted" style="margin:0">Chọn dịch vụ, xem gói giá rồi đặt đơn.</p></div>
@@ -262,7 +312,7 @@ async function adminTab(tab,btn){
   let now=Date.now();
   c.innerHTML=`<div class="admin-item"><h3>🏷️ Mã giảm giá</h3><p class="muted">Tạo mã giảm theo số lượt dùng, thời gian hết hạn và số tiền giảm.</p><button class="primary" style="padding:12px 15px;border-radius:12px" onclick="newPromo()">＋ Tạo mã giảm giá</button></div>`+((data||[]).map(x=>{let expired=x.expires_at&&new Date(x.expires_at).getTime()<=now;let used=Number(x.used_count||0);let max=x.max_uses==null?'∞':x.max_uses;let disabled=!x.active||expired||(x.max_uses!=null&&used>=Number(x.max_uses));let status=expired?'Hết hạn':(disabled?'Tắt':'Đang dùng');return `<div class="admin-item"><div class="row"><div><b>${esc(x.code)}</b><br>Giảm: <span class="price">${money(x.discount_amount)}</span><br>Lượt dùng: ${used}/${max}<br>Hạn: ${x.expires_at?new Date(x.expires_at).toLocaleString('vi-VN'):'Không giới hạn'}<br><span class="status ${disabled?'danger':'success'}">${status}</span></div><div class="actions"><button onclick="editPromo('${x.id}')">Sửa</button><button onclick="togglePromo('${x.id}',${!x.active})">${x.active?'Tắt':'Bật'}</button><button class="danger-btn" onclick="deletePromo('${x.id}')">Xóa</button></div></div></div>`}).join('')||`<div class="admin-item"><p>Chưa có mã giảm giá.</p></div>`);
  }else{
-  c.innerHTML=`<div class="admin-item"><h3>Trạng thái website</h3><p class="muted">Hiện tại: <b>${siteSettings?.is_closed?'🔒 ĐANG ĐÓNG':'🟢 ĐANG MỞ'}</b></p><div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0"><button class="primary" onclick="setSiteState(false)">🟢 MỞ WEBSITE</button><button class="danger" onclick="setSiteState(true)">🔒 ĐÓNG WEBSITE</button></div><div class="field"><label>Thông báo khi đóng</label><textarea id="siteMsg">${esc(siteSettings?.message||'Website đang tạm đóng để bảo trì.')}</textarea></div></div><div class="admin-item"><h3>🎨 Cấu hình giao diện</h3><p class="muted">Nhập link ảnh. Để trống sẽ giữ giao diện mặc định.</p><div class="field"><label>Tên website / Title</label><input id="cfgTitle" value="${esc(siteSettings?.site_title||'')}" placeholder="BDUY X TUAN KIET"></div><div class="field"><label>🖼️ Banner</label><input id="cfgBanner" value="${esc(siteSettings?.banner_url||'')}" placeholder="https://.../banner.jpg"></div><div class="field"><label>⭐ Logo custom</label><input id="cfgLogo" value="${esc(siteSettings?.logo_url||'')}" placeholder="https://.../logo.png"></div><div class="field"><label>🌐 Favicon</label><input id="cfgFavicon" value="${esc(siteSettings?.favicon_url||'')}" placeholder="https://.../favicon.png"></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="saveSiteConfig()">💾 Lưu cấu hình</button></div>`;
+  c.innerHTML=`<div class="admin-item"><h3>Trạng thái website</h3><p class="muted">Hiện tại: <b>${siteSettings?.is_closed?'🔒 ĐANG ĐÓNG':'🟢 ĐANG MỞ'}</b></p><div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0"><button class="primary" onclick="setSiteState(false)">🟢 MỞ WEBSITE</button><button class="danger" onclick="setSiteState(true)">🔒 ĐÓNG WEBSITE</button></div><div class="field"><label>Thông báo khi đóng</label><textarea id="siteMsg">${esc(siteSettings?.message||'Website đang tạm đóng để bảo trì.')}</textarea></div></div><div class="admin-item"><h3>🎨 Cấu hình giao diện</h3><p class="muted">Nhập link ảnh. Để trống sẽ giữ giao diện mặc định.</p><div class="field"><label>Tên website / Title</label><input id="cfgTitle" value="${esc(siteSettings?.site_title||'')}" placeholder="BD Roblox Shop"></div><div class="field"><label>🖼️ Banner</label><input id="cfgBanner" value="${esc(siteSettings?.banner_url||'')}" placeholder="https://.../banner.jpg"></div><div class="field"><label>⭐ Logo custom</label><input id="cfgLogo" value="${esc(siteSettings?.logo_url||'')}" placeholder="https://.../logo.png"></div><div class="field"><label>🌐 Favicon</label><input id="cfgFavicon" value="${esc(siteSettings?.favicon_url||'')}" placeholder="https://.../favicon.png"></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="saveSiteConfig()">💾 Lưu cấu hình</button></div>`;
  }
 }
 function newServiceCategory(){openModal(`<div class="modal-head"><h2>＋ Dịch vụ mới</h2><button class="close" onclick="closeModal()">×</button></div><div class="field"><label>Tên dịch vụ</label><input id="scn" placeholder="Buff TT Roblox"></div><div class="field"><label>Link ảnh</label><input id="sci" placeholder="https://..."></div><div class="field"><label>Mô tả / nội dung</label><textarea id="sco"></textarea></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="saveServiceCategory()">Tạo dịch vụ</button>`)}
