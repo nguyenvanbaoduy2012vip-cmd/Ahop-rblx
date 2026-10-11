@@ -22,7 +22,10 @@ body{padding-bottom:82px}
 .site-footer p{margin:6px 0;font-size:13px}
 .bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:70;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));background:#fffdfdF5;backdrop-filter:blur(14px);border-top:1px solid #eedada;box-shadow:0 -6px 24px #65000012}
 .bottom-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;padding:5px 2px;background:transparent;color:#5d4545;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap}
-.bottom-nav button span{font-size:19px;line-height:1.1}
+.bottom-nav button .nav-icon{width:23px;height:23px;stroke-width:2.25;display:block;margin-bottom:1px}
+.bottom-nav button{transition:background .18s ease,color .18s ease}
+.bottom-nav button.active{background:#c71919;color:#fff;box-shadow:0 4px 12px #c7191933}
+.bottom-nav button.active .nav-icon{stroke-width:2.5}
 .bottom-nav button:active{background:#fdeeee;color:#c71919}
 @media(min-width:900px){.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(560px,calc(100% - 24px));border:1px solid #eedada;border-bottom:0;border-radius:18px 18px 0 0}}
 @media(max-width:650px){.container{padding:14px 10px 30px}.nav{padding:9px 10px}.logo{font-size:17px}.nav button{font-size:12px}.site-footer{padding:18px 12px 12px}}
@@ -44,13 +47,14 @@ body{padding-bottom:82px}
   <p><strong>HỖ TRỢ 24/7</strong></p>
 </footer>
 <nav class="bottom-nav" aria-label="Điều hướng nhanh">
-  <button onclick="showSection('shop')"><span>🏠</span>Trang Chủ</button>
-  <button onclick="openTopup()"><span>💳</span>Nạp tiền</button>
-  <button onclick="openHistory()"><span>📜</span>Xem lịch sử</button>
-  <button onclick="openProfile()"><span>👤</span>Tài khoản</button>
+  <button class="active" onclick="showSection('shop')"><i class="nav-icon" data-lucide="house"></i><span>Trang Chủ</span></button>
+  <button onclick="openTopup()"><i class="nav-icon" data-lucide="wallet"></i><span>Nạp tiền</span></button>
+  <button onclick="openHistory()"><i class="nav-icon" data-lucide="history"></i><span>Xem lịch sử</span></button>
+  <button onclick="openProfile()"><i class="nav-icon" data-lucide="circle-user-round"></i><span>Tài khoản</span></button>
 </nav>
 
 <div id="modal" class="modal"><div class="modal-box" id="modalBox"></div></div><div id="toast"></div>
+<script src="https://unpkg.com/lucide@latest"></script>
 <script>
 const SUPABASE_URL="https://rnbjhfnjyxfpskdszdwi.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_JRRtyQgA8xEuR3skPoigDA_Jo-68s-L";
