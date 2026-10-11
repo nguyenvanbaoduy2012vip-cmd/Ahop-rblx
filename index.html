@@ -269,6 +269,17 @@ async function openTopupHistory(){
  openModal(historyHead("💳 Lịch sử nạp thẻ")+(data.length?data.map(o=>{let q=status(o.status);return `<div class="admin-item"><b>${esc(o.card_type||o.method||"Nạp thẻ")}</b> · ${money(o.card_value||o.amount||0)}<br><span class="status ${q[1]}">${q[0]}</span><br><span class="muted">${new Date(o.created_at).toLocaleString("vi-VN")}</span></div>`}).join(""):"<p class='muted'>Chưa có lịch sử nạp thẻ.</p>"));
 }
 
+
+async function openOrderHistory(){
+ if(!currentUser)return openAuth("login");
+ openModal(historyHead("🧾 Lịch sử đặt đơn")+`<p class="muted">Đang tải...</p>`);
+ const {data,error}=await sb.rpc("bd_shop_my_service_orders");
+ if(error)return openModal(historyHead("🧾 Lịch sử đặt đơn")+`<p class="muted">Không tải được lịch sử đặt đơn: ${esc(error.message)}</p>`);
+ const rows=data||[];
+ const st={pending:["Đang duyệt (Pending)","warn"],processing:["Đang làm (Processing)","warn"],completed:["Hoàn thành (Completed)","success"],cancelled:["Đã hủy (Cancelled)","danger"]};
+ openModal(historyHead("🧾 Lịch sử đặt đơn")+(rows.length?rows.map(o=>{const q=st[o.status]||[o.status||"Không rõ",""];return `<div class="admin-item" style="margin-bottom:12px"><b>${esc(o.category_name||"Dịch vụ")}</b>${o.package_name?` · ${esc(o.package_name)}`:""}<br><b>Tài khoản:</b> <code>${esc(o.account||"")}</code><br><b>Giá:</b> <span class="price">${money(o.amount)}</span><br><span class="status ${q[1]}">${esc(q[0])}</span>${o.admin_note?`<br><span class="muted">Ghi chú Admin: ${esc(o.admin_note)}</span>`:""}<br><span class="small muted">${o.created_at?new Date(o.created_at).toLocaleString("vi-VN"):"Không rõ thời gian"}</span></div>`}).join(""):"<p class='muted'>Bạn chưa có lịch sử đặt đơn.</p>"));
+}
+
 function openProfile(){
  if(!currentUser)return openAuth("login");
  let w=currentProfile||{};
