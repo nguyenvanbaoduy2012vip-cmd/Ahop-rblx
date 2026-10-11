@@ -14,6 +14,19 @@
 .cred-btn{border:1px solid #ddd;background:#fff;border-radius:9px;padding:7px 9px;cursor:pointer;font-size:14px}
 .cred-btn:hover{background:#f5f5f5}
 .password-text.is-hidden{letter-spacing:3px}
+
+/* Mobile-friendly fixed bottom navigation and footer */
+body{padding-bottom:82px}
+.site-footer{max-width:1150px;margin:20px auto 24px;padding:22px 18px;text-align:center;color:#6b5555}
+.site-footer .footer-brand{font-size:18px;font-weight:900;color:#c71919;margin-bottom:8px}
+.site-footer p{margin:6px 0;font-size:13px}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:70;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));background:#fffdfdF5;backdrop-filter:blur(14px);border-top:1px solid #eedada;box-shadow:0 -6px 24px #65000012}
+.bottom-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;padding:5px 2px;background:transparent;color:#5d4545;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap}
+.bottom-nav button span{font-size:19px;line-height:1.1}
+.bottom-nav button:active{background:#fdeeee;color:#c71919}
+@media(min-width:900px){.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(560px,calc(100% - 24px));border:1px solid #eedada;border-bottom:0;border-radius:18px 18px 0 0}}
+@media(max-width:650px){.container{padding:14px 10px 30px}.nav{padding:9px 10px}.logo{font-size:17px}.nav button{font-size:12px}.site-footer{padding:18px 12px 12px}}
+
 </style></head>
 <body>
 <header><div class="nav"><div class="logo" onclick="showSection('shop')"><img id="customLogo" alt="Logo"><span id="logoText">BD <b style="color:#222">ROBLOX SHOP</b></span></div><button onclick="showSection('shop')">Shop</button><button onclick="openTopup()">💳 Nạp thẻ</button><button onclick="openHistory()">📜 Lịch sử</button><button onclick="openServiceOrders()">🧾 Các đơn hàng</button><button title="Zalo" onclick="openZalo()"><img class="zalo-logo" src="https://img.icons8.com/bubbles/1200/zalo.jpg" alt="Zalo"></button><span id="userArea"></span></div></header>
@@ -22,6 +35,21 @@
 <div style="margin:30px 0 12px"><h2 style="margin:0 0 5px">🧾 Đặt đơn</h2><p class="muted" style="margin:0">Chọn dịch vụ, xem gói giá rồi đặt đơn.</p></div>
 <div id="serviceCategories" class="grid"><div class="empty">⏳ Đang tải dịch vụ...</div></div>
 </section><section id="admin" class="hidden"></section></main>
+
+<footer class="site-footer">
+  <div class="footer-brand">BDUY X TUẤN KIỆT</div>
+  <p>BẢN QUYỀN THUỘC VỀ BDUY ®️</p>
+  <p>ZALO: 0966197414</p>
+  <p>DISCORD: @_baoduy</p>
+  <p><strong>HỖ TRỢ 24/7</strong></p>
+</footer>
+<nav class="bottom-nav" aria-label="Điều hướng nhanh">
+  <button onclick="showSection('shop')"><span>🏠</span>Trang Chủ</button>
+  <button onclick="openTopup()"><span>💳</span>Nạp tiền</button>
+  <button onclick="openHistory()"><span>📜</span>Xem lịch sử</button>
+  <button onclick="openProfile()"><span>👤</span>Tài khoản</button>
+</nav>
+
 <div id="modal" class="modal"><div class="modal-box" id="modalBox"></div></div><div id="toast"></div>
 <script>
 const SUPABASE_URL="https://rnbjhfnjyxfpskdszdwi.supabase.co";
