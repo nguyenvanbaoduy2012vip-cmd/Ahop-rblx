@@ -47,14 +47,14 @@ body{padding-bottom:82px}
   <p><strong>HỖ TRỢ 24/7</strong></p>
 </footer>
 <nav class="bottom-nav" aria-label="Điều hướng nhanh">
-  <button class="active" onclick="showSection('shop')"><i class="nav-icon" data-lucide="house"></i><span>Trang Chủ</span></button>
-  <button onclick="openTopup()"><i class="nav-icon" data-lucide="wallet"></i><span>Nạp tiền</span></button>
-  <button onclick="openHistory()"><i class="nav-icon" data-lucide="history"></i><span>Xem lịch sử</span></button>
-  <button onclick="openProfile()"><i class="nav-icon" data-lucide="circle-user-round"></i><span>Tài khoản</span></button>
+  <button class="active" onclick="showSection('shop')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg><span>Trang Chủ</span></button>
+  <button onclick="openTopup()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 9h18M16 14h2"/><path d="M6 5V3h12v2"/></svg><span>Nạp tiền</span></button>
+  <button onclick="openHistory()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></svg><span>Xem lịch sử</span></button>
+  <button onclick="openProfile()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><circle cx="12" cy="12" r="10"/></svg><span>Tài khoản</span></button>
 </nav>
 
 <div id="modal" class="modal"><div class="modal-box" id="modalBox"></div></div><div id="toast"></div>
-<script src="https://unpkg.com/lucide@latest"></script>
+
 <script>
 const SUPABASE_URL="https://rnbjhfnjyxfpskdszdwi.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_JRRtyQgA8xEuR3skPoigDA_Jo-68s-L";
