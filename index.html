@@ -395,7 +395,7 @@ function renderCodeGate(){
  const b=document.getElementById('codeGateFooterButton');
  if(b)b.classList.toggle('hidden',!siteSettings?.code_gate_enabled);
 }
-function getGateCodes(){return String(siteSettings?.code_gate_key||'').split(/[\\n,;]+/).map(x=>x.trim()).filter(Boolean)}
+function getGateCodes(){return String(siteSettings?.code_gate_key||'').split(/[\n,;]+/).map(x=>x.trim()).filter(Boolean)}
 function openCodeGate(){
  if(!siteSettings?.code_gate_enabled)return toast('Mã vượt link đang tắt.','danger');
  if(!getGateCodes().length)return toast('Chưa có mã nào.','danger');
@@ -425,9 +425,9 @@ async function tickCodeGate(){
  codeGateChosen=codes[idx];
  const remaining=codes.filter((_,i)=>i!==idx);
  // Save remaining codes to Supabase so a code cannot be given out repeatedly.
- const {error}=await sb.from('bd_shop_settings').update({code_gate_key:remaining.join('\\n')||null}).eq('id',1);
+ const {error}=await sb.from('bd_shop_settings').update({code_gate_key:remaining.join('\n')||null}).eq('id',1);
  if(error){document.getElementById('codeGateStatus').textContent='Không thể cập nhật kho mã. Hãy báo Admin.';counter.textContent='0s';return}
- siteSettings.code_gate_key=remaining.join('\\n');
+ siteSettings.code_gate_key=remaining.join('\n');
  document.getElementById('codeGateStatus').textContent='Mã ngẫu nhiên của bạn đã sẵn sàng!';
  document.getElementById('codeGateValue').textContent=codeGateChosen;
  document.getElementById('codeGateResult').classList.remove('hidden');
@@ -439,8 +439,8 @@ async function copyCodeGate(){const v=codeGateChosen;if(!v)return;try{await navi
 async function saveCodeGate(){
  if(currentProfile?.role!=='admin')return toast('Không có quyền','danger');
  const enabled=!!document.getElementById('gateEnabled')?.checked;
- const codes=String(document.getElementById('gateKey')?.value||'').split(/[\\n,;]+/).map(x=>x.trim()).filter(Boolean);
- const key=codes.length?[...new Set(codes)].join('\\n'):null;
+ const codes=String(document.getElementById('gateKey')?.value||'').split(/[\n,;]+/).map(x=>x.trim()).filter(Boolean);
+ const key=codes.length?[...new Set(codes)].join('\n'):null;
  const {error}=await sb.from('bd_shop_settings').update({code_gate_enabled:enabled,code_gate_key:key}).eq('id',1);
  if(error)return toast('Chưa lưu được. Hãy kiểm tra cột code_gate_key: '+error.message,'danger');
  await loadSiteSettings();renderCodeGate();toast('Đã lưu '+codes.length+' mã','success');openAdmin()
