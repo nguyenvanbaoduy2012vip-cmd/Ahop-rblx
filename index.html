@@ -14,15 +14,98 @@
 .cred-btn{border:1px solid #ddd;background:#fff;border-radius:9px;padding:7px 9px;cursor:pointer;font-size:14px}
 .cred-btn:hover{background:#f5f5f5}
 .password-text.is-hidden{letter-spacing:3px}
-</style></head>
+
+/* Mobile-friendly fixed bottom navigation and footer */
+body{padding-bottom:82px}
+.site-footer{max-width:1150px;margin:20px auto 24px;padding:22px 18px;text-align:center;color:#6b5555}
+.site-footer .footer-brand{font-size:18px;font-weight:900;color:#c71919;margin-bottom:8px}
+.site-footer p{margin:6px 0;font-size:13px}
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:70;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));background:#fffdfdF5;backdrop-filter:blur(14px);border-top:1px solid #eedada;box-shadow:0 -6px 24px #65000012}
+.bottom-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:0;padding:5px 2px;background:transparent;color:#5d4545;border-radius:12px;font-size:11px;font-weight:700;white-space:nowrap}
+.bottom-nav button .nav-icon{width:23px;height:23px;stroke-width:2.25;display:block;margin-bottom:1px}
+.bottom-nav button{transition:background .18s ease,color .18s ease}
+.bottom-nav button.active{background:#c71919;color:#fff;box-shadow:0 4px 12px #c7191933}
+.bottom-nav button.active .nav-icon{stroke-width:2.5}
+.bottom-nav button:active{background:#fdeeee;color:#c71919}
+@media(min-width:900px){.bottom-nav{left:50%;right:auto;transform:translateX(-50%);width:min(560px,calc(100% - 24px));border:1px solid #eedada;border-bottom:0;border-radius:18px 18px 0 0}}
+@media(max-width:650px){.container{padding:14px 10px 30px}.nav{padding:9px 10px}.logo{font-size:17px}.nav button{font-size:12px}.site-footer{padding:18px 12px 12px}}
+
+
+/* Header gọn kiểu shop: logo + Zalo + tài khoản */
+.nav{max-width:1150px;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:nowrap}
+.logo{min-width:0;max-width:58%;font-size:21px;gap:10px;flex:1}
+.logo img{width:190px;height:64px;max-width:100%;object-fit:contain;object-position:left center;border-radius:14px;flex-shrink:1}
+.logo span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.header-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-shrink:0}
+.header-actions #userArea{display:flex;align-items:center;gap:8px}
+.header-actions button{border:1px solid #c71919;border-radius:999px;padding:10px 17px;font-weight:800;color:#c71919;background:#fff;white-space:nowrap}
+.header-actions button.primary{background:#c71919!important;color:#fff!important}
+.zalo-button{display:inline-flex;align-items:center;gap:7px}
+.zalo-logo{width:32px;height:32px;border-radius:50%;object-fit:cover;vertical-align:middle}
+@media(max-width:650px){.nav{padding:9px 10px;gap:8px}.logo{font-size:15px;gap:6px;max-width:58%}.logo img{width:150px;height:54px}.header-actions{gap:6px}.header-actions #userArea{gap:5px}.header-actions button{padding:9px 11px;font-size:12px}.zalo-button{padding:5px 9px!important;gap:4px}.zalo-logo{width:34px;height:34px}.zalo-button span{display:none}}
+@media(max-width:380px){.logo{font-size:13px;max-width:55%}.logo img{width:125px;height:48px}.header-actions button{padding:8px 9px;font-size:11px}}
+
+
+/* Responsive polish: compact header, flexible bottom navigation */
+.nav{width:100%;min-width:0}
+.logo{overflow:hidden}
+.logo img{object-fit:contain}
+.header-actions{min-width:0}
+.header-actions #userArea{min-width:0;flex-wrap:wrap;justify-content:flex-end}
+.bottom-nav{width:100%;max-width:100%;}
+@media(max-width:650px){
+  .nav{padding:8px 10px;gap:7px}
+  .logo{max-width:52%;font-size:15px;flex:1 1 auto;gap:5px}
+  .logo img{width:clamp(100px,32vw,150px);height:48px}
+  .header-actions{gap:5px}
+  .header-actions #userArea{gap:4px}
+  .header-actions button{padding:8px 9px;font-size:11px}
+  .zalo-button{padding:5px 7px!important}
+  .zalo-button span{display:none}
+  .zalo-logo{width:30px;height:30px}
+  .bottom-nav{grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;padding:6px max(6px,env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(6px,env(safe-area-inset-left))}
+  .bottom-nav button{font-size:clamp(9px,2.6vw,11px);padding:6px 1px;gap:3px}
+  .bottom-nav button .nav-icon{width:21px;height:21px}
+  body{padding-bottom:76px}
+}
+@media(max-width:380px){
+  .logo{max-width:48%;font-size:13px}
+  .logo img{width:100px;height:42px}
+  .header-actions button{padding:7px 8px;font-size:10px}
+  .bottom-nav button{font-size:9px}
+}
+@media(min-width:900px){
+  .nav{padding:12px 18px}
+  .logo{max-width:65%}
+  .header-actions #userArea{flex-wrap:nowrap}
+  .bottom-nav{width:min(560px,calc(100% - 24px))}
+}
+@keyframes gateSpin{to{transform:rotate(360deg)}}\n</style></head>
 <body>
-<header><div class="nav"><div class="logo" onclick="showSection('shop')"><img id="customLogo" alt="Logo"><span id="logoText">BD <b style="color:#222">ROBLOX SHOP</b></span></div><button onclick="showSection('shop')">Shop</button><button onclick="openTopup()">💳 Nạp thẻ</button><button onclick="openHistory()">📜 Lịch sử</button><button onclick="openServiceOrders()">🧾 Các đơn hàng</button><button title="Zalo" onclick="openZalo()"><img class="zalo-logo" src="https://img.icons8.com/bubbles/1200/zalo.jpg" alt="Zalo"></button><span id="userArea"></span></div></header>
+<header><div class="nav"><div class="logo" onclick="showSection('shop')"><img id="customLogo" alt="Logo"><span id="logoText">BD <b style="color:#222">ROBLOX SHOP</b></span></div><div class="header-actions"><button class="zalo-button" title="Liên hệ Zalo" onclick="openZalo()"><img class="zalo-logo" src="https://img.icons8.com/bubbles/1200/zalo.jpg" alt="Zalo"><span>Zalo</span></button><span id="userArea"></span></div></div></header>
 <main class="container"><section id="shop"><div id="siteHero" class="hero"><h1 id="heroTitle">BDUY X TUAN KIET SHOP</h1><p>BDUY X TUAN KIET - KẾT HỢP VỚI NGUYỄN TUẤN KIỆT</p></div><div id="closedBox" class="closed hidden"></div>
 <div id="categories" class="grid"><div class="empty">⏳ Đang tải Shop...</div></div>
 <div style="margin:30px 0 12px"><h2 style="margin:0 0 5px">🧾 Đặt đơn</h2><p class="muted" style="margin:0">Chọn dịch vụ, xem gói giá rồi đặt đơn.</p></div>
 <div id="serviceCategories" class="grid"><div class="empty">⏳ Đang tải dịch vụ...</div></div>
 </section><section id="admin" class="hidden"></section></main>
+
+<footer class="site-footer">
+  <div class="footer-brand">BDUY X TUẤN KIỆT</div>
+  <p>BẢN QUYỀN THUỘC VỀ BDUY ®️</p>
+  <p>ZALO: 0966197414</p>
+  <p>DISCORD: @_baoduy</p>
+  <p><strong>HỖ TRỢ 24/7</strong></p>
+  <button id="codeGateFooterButton" class="hidden" onclick="openCodeGate()" aria-label="Nhận mã ngẫu nhiên" style="margin-top:10px;width:42px;height:42px;border-radius:50%;background:#1688f8;color:#fff;border:3px solid #fff;box-shadow:0 5px 18px #0003;font-size:23px;font-weight:900">B</button>
+</footer>
+<nav class="bottom-nav" aria-label="Điều hướng nhanh">
+  <button class="active" onclick="showSection('shop')"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9M9 21v-7h6v7"/></svg><span>Trang Chủ</span></button>
+  <button onclick="openTopup()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 9h18M16 14h2"/><path d="M6 5V3h12v2"/></svg><span>Nạp tiền</span></button>
+  <button onclick="openHistory()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 2.6-6.4L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></svg><span>Xem lịch sử</span></button>
+  <button onclick="openProfile()"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><circle cx="12" cy="12" r="10"/></svg><span>Tài khoản</span></button>
+</nav>
+
 <div id="modal" class="modal"><div class="modal-box" id="modalBox"></div></div><div id="toast"></div>
+
 <script>
 const SUPABASE_URL="https://rnbjhfnjyxfpskdszdwi.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_JRRtyQgA8xEuR3skPoigDA_Jo-68s-L";
@@ -32,13 +115,7 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&
 function toast(msg,type=""){let d=document.createElement("div");d.className="toast "+type;d.textContent=msg;document.querySelector("#toast").appendChild(d);setTimeout(()=>d.remove(),3200)}
 function openModal(html){document.querySelector("#modalBox").innerHTML=html;document.querySelector("#modal").classList.add("show")}
 function closeModal(){document.querySelector("#modal").classList.remove("show")}
-function initClient(){
- if(!window.supabase||typeof window.supabase.createClient!=="function"){
-  document.querySelector("#categories").innerHTML='<div class="empty">Không tải được thư viện đăng nhập. Hãy kiểm tra mạng rồi tải lại trang.</div>';
-  toast("Không tải được Supabase. Kiểm tra kết nối mạng.","danger");return false;
- }
- sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);return true
-}
+function initClient(){sb=supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);return true}
 function showSection(x){document.querySelector("#shop").classList.toggle("hidden",x!=="shop");document.querySelector("#admin").classList.add("hidden");if(x==="shop"){loadCategories();loadServiceCategories()}}
 function authButtons(){let a=document.querySelector("#userArea");if(!currentUser){a.innerHTML=`<button onclick="openAuth('login')">Đăng nhập</button><button class="primary" onclick="openAuth('register')">Đăng ký</button>`;return}a.innerHTML=`<button onclick="openProfile()">👤 ${esc(currentProfile?.username||"Tài khoản")} · ${money(currentProfile?.balance||0)}</button><button onclick="signOut()">Thoát</button>${currentProfile?.role==="admin"?`<button class="primary" onclick="openAdmin()">⚙ Admin</button>`:""}`}
 async function loadServiceCategories(){
@@ -98,50 +175,9 @@ async function refreshUser(){
  if(currentProfile?.banned_until&&new Date(currentProfile.banned_until)>new Date())showBan();
 }
 async function signOut(){await sb.auth.signOut();currentUser=null;currentProfile=null;authButtons();toast("Đã đăng xuất")}
-function openAuth(mode="login"){
- openModal(`<div class="modal-head"><h2>${mode==="login"?"Đăng nhập":"Tạo tài khoản"}</h2><button class="close" onclick="closeModal()">×</button></div>
- ${mode==="register"?`<div class="field"><label>Tên tài khoản</label><input id="authUser" autocomplete="username" placeholder="Tên hiển thị"></div>`:""}
- <div class="field"><label>Email</label><input id="authEmail" type="email" autocomplete="email" placeholder="email@example.com"></div>
- <div class="field"><label>Mật khẩu</label><input id="authPass" type="password" autocomplete="${mode==="login"?"current-password":"new-password"}" placeholder="Ít nhất 6 ký tự"></div>
- <div id="authStatus" class="small" role="status" style="margin:10px 0;white-space:normal"></div>
- <button id="authSubmit" class="primary" style="width:100%;padding:13px;border-radius:13px" onclick="${mode==="login"?"login()":"register()"}">${mode==="login"?"Đăng nhập":"Đăng ký"}</button>`)
-}
-function authStatus(msg,isError=true){const el=document.querySelector("#authStatus");if(el){el.textContent=msg;el.style.color=isError?"#a90000":"#18733b"}}
-function authBusy(busy,label){const b=document.querySelector("#authSubmit");if(b){b.disabled=busy;b.style.opacity=busy?".65":"1";b.textContent=busy?"Đang xử lý…":label}}
-async function register(){
- if(!sb)return authStatus("Hệ thống đăng nhập chưa tải xong. Hãy tải lại trang.");
- const username=document.querySelector("#authUser")?.value.trim()||"",email=document.querySelector("#authEmail")?.value.trim()||"",password=document.querySelector("#authPass")?.value||"";
- if(!username||!email||password.length<6)return authStatus("Nhập đủ tên, email và mật khẩu ít nhất 6 ký tự.");
- authBusy(true,"Đăng ký");authStatus("Đang tạo tài khoản…",false);
- try{
-  const {data,error}=await sb.auth.signUp({email,password,options:{data:{username,bd_shop:"true"}}});
-  if(error)throw error;
-  if(data?.session){
-   await refreshUser();
-   if(!currentProfile){authStatus("Tài khoản Auth đã tạo nhưng hồ sơ shop chưa được tạo. Cần sửa trigger/RLS bảng bd_shop_profiles trong Supabase; đừng đăng ký lặp nhiều lần.");authBusy(false,"Đăng ký");return}
-   closeModal();toast("Đăng ký thành công","success");
-  }else{
-   authStatus("Đã gửi yêu cầu đăng ký. Nếu Supabase bật xác minh email, hãy mở email xác nhận rồi quay lại đăng nhập.",false);
-   authBusy(false,"Đăng ký");
-  }
- }catch(e){authStatus(e?.message||"Đăng ký thất bại. Hãy thử lại.");authBusy(false,"Đăng ký")}
-}
-async function login(){
- if(!sb)return authStatus("Hệ thống đăng nhập chưa tải xong. Hãy tải lại trang.");
- const email=document.querySelector("#authEmail")?.value.trim()||"",password=document.querySelector("#authPass")?.value||"";
- if(!email||!password)return authStatus("Vui lòng nhập email và mật khẩu.");
- authBusy(true,"Đăng nhập");authStatus("Đang kiểm tra tài khoản…",false);
- try{
-  const {data,error}=await sb.auth.signInWithPassword({email,password});
-  if(error)throw error;
-  const user=data?.user;
-  if(!user)throw new Error("Đăng nhập chưa trả về tài khoản. Hãy thử lại.");
-  const {data:profile,error:profileError}=await sb.from("bd_shop_profiles").select("id").eq("id",user.id).maybeSingle();
-  if(profileError)throw new Error("Đăng nhập Auth được nhưng không đọc được hồ sơ shop: "+profileError.message);
-  if(!profile){await sb.auth.signOut();throw new Error("Tài khoản đã tồn tại trong Supabase Auth nhưng chưa có hồ sơ trong bd_shop_profiles. Cần sửa trigger/tạo hồ sơ; không phải nút bị lỗi.")}
-  closeModal();await refreshUser();toast("Đăng nhập thành công","success");
- }catch(e){authStatus(e?.message||"Đăng nhập thất bại. Hãy thử lại.");authBusy(false,"Đăng nhập")}
-}
+function openAuth(mode="login"){openModal(`<div class="modal-head"><h2>${mode==="login"?"Đăng nhập":"Tạo tài khoản"}</h2><button class="close" onclick="closeModal()">×</button></div>${mode==="register"?`<div class="field"><label>Tên tài khoản</label><input id="authUser" placeholder="Tên hiển thị"></div>`:""}<div class="field"><label>Email</label><input id="authEmail" type="email" placeholder="email@example.com"></div><div class="field"><label>Mật khẩu</label><input id="authPass" type="password" placeholder="Ít nhất 6 ký tự"></div><button class="primary" style="width:100%;padding:13px;border-radius:13px" onclick="${mode==="login"?"login()":"register()"}">${mode==="login"?"Đăng nhập":"Đăng ký"}</button>`)}
+async function register(){let username=document.querySelector("#authUser").value.trim(),email=document.querySelector("#authEmail").value.trim(),password=document.querySelector("#authPass").value;if(!username||!email||password.length<6)return toast("Nhập đủ thông tin, mật khẩu ít nhất 6 ký tự","danger");let {data,error}=await sb.auth.signUp({email,password,options:{data:{username,bd_shop:"true"}}});if(error)return toast(error.message,"danger");closeModal();toast(data.session?"Đăng ký thành công":"Đăng ký thành công, kiểm tra email nếu Supabase đang bật xác minh","success");await refreshUser()}
+async function login(){let email=document.querySelector("#authEmail").value.trim(),password=document.querySelector("#authPass").value;let {error}=await sb.auth.signInWithPassword({email,password});if(error)return toast(error.message,"danger");let {data:{user}}=await sb.auth.getUser();let p=await sb.from("bd_shop_profiles").select("id").eq("id",user.id).maybeSingle();if(!p.data)return sb.auth.signOut().then(()=>toast("Tài khoản này chưa đăng ký trên BD Roblox Shop mới.","danger"));closeModal();await refreshUser();toast("Đăng nhập thành công","success")}
 function showBan(){let until=new Date(currentProfile.banned_until);openModal(`<div class="modal-head"><h2>🚫 Tài Khoản Đã Bị Khóa</h2></div><div class="result"><h3>${esc(currentProfile.ban_message||"Tài khoản đã bị khóa.")}</h3><p>Thời gian còn lại: <b id="countdown"></b></p></div>`);let timer=setInterval(()=>{let s=Math.max(0,until-new Date()),t=Math.floor(s/1000),d=Math.floor(t/86400);t%=86400;let h=Math.floor(t/3600);t%=3600;let m=Math.floor(t/60),sec=t%60,el=document.querySelector("#countdown");if(el)el.textContent=`${d} ngày ${h} giờ ${m} phút ${sec} giây`;if(!s){clearInterval(timer);closeModal();refreshUser()}},1000)}
 async function loadCategories(){if(!sb)return;let {data,error}=await sb.from("bd_shop_categories").select("*").eq("active",true).order("created_at",{ascending:false});let box=document.querySelector("#categories");if(error){box.innerHTML=`<div class="empty">Không tải được danh mục: ${esc(error.message)}</div>`;return}if(!data?.length){box.innerHTML=`<div class="empty">Chưa có danh mục nào.</div>`;return}box.innerHTML=data.map(c=>{let hasDiscount=Number(c.discount_price)>0&&Number(c.discount_price)<Number(c.price);return `<article class="card">${c.image_url?`<img src="${esc(c.image_url)}" alt="">`:`<div style="height:155px;background:#f7eaea;display:grid;place-items:center;font-size:45px">🎁</div>`}<div class="card-body"><h3>${esc(c.name)}</h3><div>${hasDiscount?`<span class="discount-old">${money(c.price)}</span><span class="discount-new">${money(c.discount_price)}</span><span class="discount-badge">Giảm ${Math.round((1-Number(c.discount_price)/Number(c.price))*100)}%</span>`:`<span class="price">${money(c.price)}</span>`}</div><p class="muted">${esc(c.note||"")}</p><div class="actions"><button class="primary" onclick="openBag('${c.id}')">🎁 Xé túi</button></div></div></article>`}).join("")}
 async function copyCredential(value){
@@ -234,6 +270,17 @@ async function openTopupHistory(){
  openModal(historyHead("💳 Lịch sử nạp thẻ")+(data.length?data.map(o=>{let q=status(o.status);return `<div class="admin-item"><b>${esc(o.card_type||o.method||"Nạp thẻ")}</b> · ${money(o.card_value||o.amount||0)}<br><span class="status ${q[1]}">${q[0]}</span><br><span class="muted">${new Date(o.created_at).toLocaleString("vi-VN")}</span></div>`}).join(""):"<p class='muted'>Chưa có lịch sử nạp thẻ.</p>"));
 }
 
+
+async function openOrderHistory(){
+ if(!currentUser)return openAuth("login");
+ openModal(historyHead("🧾 Lịch sử đặt đơn")+`<p class="muted">Đang tải...</p>`);
+ const {data,error}=await sb.rpc("bd_shop_my_service_orders");
+ if(error)return openModal(historyHead("🧾 Lịch sử đặt đơn")+`<p class="muted">Không tải được lịch sử đặt đơn: ${esc(error.message)}</p>`);
+ const rows=data||[];
+ const st={pending:["Đang duyệt (Pending)","warn"],processing:["Đang làm (Processing)","warn"],completed:["Hoàn thành (Completed)","success"],cancelled:["Đã hủy (Cancelled)","danger"]};
+ openModal(historyHead("🧾 Lịch sử đặt đơn")+(rows.length?rows.map(o=>{const q=st[o.status]||[o.status||"Không rõ",""];return `<div class="admin-item" style="margin-bottom:12px"><b>${esc(o.category_name||"Dịch vụ")}</b>${o.package_name?` · ${esc(o.package_name)}`:""}<br><b>Tài khoản:</b> <code>${esc(o.account||"")}</code><br><b>Giá:</b> <span class="price">${money(o.amount)}</span><br><span class="status ${q[1]}">${esc(q[0])}</span>${o.admin_note?`<br><span class="muted">Ghi chú Admin: ${esc(o.admin_note)}</span>`:""}<br><span class="small muted">${o.created_at?new Date(o.created_at).toLocaleString("vi-VN"):"Không rõ thời gian"}</span></div>`}).join(""):"<p class='muted'>Bạn chưa có lịch sử đặt đơn.</p>"));
+}
+
 function openProfile(){
  if(!currentUser)return openAuth("login");
  let w=currentProfile||{};
@@ -277,7 +324,7 @@ async function adminTab(tab,btn){
   let now=Date.now();
   c.innerHTML=`<div class="admin-item"><h3>🏷️ Mã giảm giá</h3><p class="muted">Tạo mã giảm theo số lượt dùng, thời gian hết hạn và số tiền giảm.</p><button class="primary" style="padding:12px 15px;border-radius:12px" onclick="newPromo()">＋ Tạo mã giảm giá</button></div>`+((data||[]).map(x=>{let expired=x.expires_at&&new Date(x.expires_at).getTime()<=now;let used=Number(x.used_count||0);let max=x.max_uses==null?'∞':x.max_uses;let disabled=!x.active||expired||(x.max_uses!=null&&used>=Number(x.max_uses));let status=expired?'Hết hạn':(disabled?'Tắt':'Đang dùng');return `<div class="admin-item"><div class="row"><div><b>${esc(x.code)}</b><br>Giảm: <span class="price">${money(x.discount_amount)}</span><br>Lượt dùng: ${used}/${max}<br>Hạn: ${x.expires_at?new Date(x.expires_at).toLocaleString('vi-VN'):'Không giới hạn'}<br><span class="status ${disabled?'danger':'success'}">${status}</span></div><div class="actions"><button onclick="editPromo('${x.id}')">Sửa</button><button onclick="togglePromo('${x.id}',${!x.active})">${x.active?'Tắt':'Bật'}</button><button class="danger-btn" onclick="deletePromo('${x.id}')">Xóa</button></div></div></div>`}).join('')||`<div class="admin-item"><p>Chưa có mã giảm giá.</p></div>`);
  }else{
-  c.innerHTML=`<div class="admin-item"><h3>Trạng thái website</h3><p class="muted">Hiện tại: <b>${siteSettings?.is_closed?'🔒 ĐANG ĐÓNG':'🟢 ĐANG MỞ'}</b></p><div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0"><button class="primary" onclick="setSiteState(false)">🟢 MỞ WEBSITE</button><button class="danger" onclick="setSiteState(true)">🔒 ĐÓNG WEBSITE</button></div><div class="field"><label>Thông báo khi đóng</label><textarea id="siteMsg">${esc(siteSettings?.message||'Website đang tạm đóng để bảo trì.')}</textarea></div></div><div class="admin-item"><h3>🎨 Cấu hình giao diện</h3><p class="muted">Nhập link ảnh. Để trống sẽ giữ giao diện mặc định.</p><div class="field"><label>Tên website / Title</label><input id="cfgTitle" value="${esc(siteSettings?.site_title||'')}" placeholder="BD Roblox Shop"></div><div class="field"><label>🖼️ Banner</label><input id="cfgBanner" value="${esc(siteSettings?.banner_url||'')}" placeholder="https://.../banner.jpg"></div><div class="field"><label>⭐ Logo custom</label><input id="cfgLogo" value="${esc(siteSettings?.logo_url||'')}" placeholder="https://.../logo.png"></div><div class="field"><label>🌐 Favicon</label><input id="cfgFavicon" value="${esc(siteSettings?.favicon_url||'')}" placeholder="https://.../favicon.png"></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="saveSiteConfig()">💾 Lưu cấu hình</button></div>`;
+  c.innerHTML=`<div class="admin-item"><h3>Trạng thái website</h3><p class="muted">Hiện tại: <b>${siteSettings?.is_closed?'🔒 ĐANG ĐÓNG':'🟢 ĐANG MỞ'}</b></p><div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0"><button class="primary" onclick="setSiteState(false)">🟢 MỞ WEBSITE</button><button class="danger" onclick="setSiteState(true)">🔒 ĐÓNG WEBSITE</button></div><div class="field"><label>Thông báo khi đóng</label><textarea id="siteMsg">${esc(siteSettings?.message||'Website đang tạm đóng để bảo trì.')}</textarea></div></div><div class="admin-item"><h3>🎨 Cấu hình giao diện</h3><p class="muted">Nhập link ảnh. Để trống sẽ giữ giao diện mặc định.</p><div class="field"><label>Tên website / Title</label><input id="cfgTitle" value="${esc(siteSettings?.site_title||'')}" placeholder="BD Roblox Shop"></div><div class="field"><label>🖼️ Banner</label><input id="cfgBanner" value="${esc(siteSettings?.banner_url||'')}" placeholder="https://.../banner.jpg"></div><div class="field"><label>⭐ Logo custom</label><input id="cfgLogo" value="${esc(siteSettings?.logo_url||'')}" placeholder="https://.../logo.png"></div><div class="field"><label>🌐 Favicon</label><input id="cfgFavicon" value="${esc(siteSettings?.favicon_url||'')}" placeholder="https://.../favicon.png"></div><div class="field" style="border-top:1px solid #eee;padding-top:14px"><label>🔵 Mã vượt link</label><p class="muted">Bật/tắt biểu tượng B và cài mã khách nhận sau 60 giây.</p><label class="switch" style="margin:10px 0"><input id="gateEnabled" type="checkbox" ${siteSettings?.code_gate_enabled?'checked':''}> Hiện biểu tượng B cho khách</label><textarea id="gateKey" rows="5" placeholder="Mỗi mã một dòng:&#10;BDUY1&#10;BDUY2">${esc((siteSettings?.code_gate_key||'').split(/[\n,;]+/).map(x=>x.trim()).filter(Boolean).join('\n'))}</textarea><p class="small muted">Mỗi dòng là một mã riêng. Mã được chọn ngẫu nhiên sẽ bị xóa khỏi danh sách sau khi khách nhận.</p><button class="primary" style="width:100%;padding:12px;margin-top:8px" onclick="saveCodeGate()">💾 Lưu danh sách mã</button></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="saveSiteConfig()">💾 Lưu cấu hình</button></div>`;
  }
 }
 function newServiceCategory(){openModal(`<div class="modal-head"><h2>＋ Dịch vụ mới</h2><button class="close" onclick="closeModal()">×</button></div><div class="field"><label>Tên dịch vụ</label><input id="scn" placeholder="Buff TT Roblox"></div><div class="field"><label>Link ảnh</label><input id="sci" placeholder="https://..."></div><div class="field"><label>Mô tả / nội dung</label><textarea id="sco"></textarea></div><button class="primary" style="width:100%;padding:13px;border-radius:12px" onclick="saveServiceCategory()">Tạo dịch vụ</button>`)}
@@ -329,10 +376,70 @@ async function refreshWallet(){
  return null;
 }
 (async function(){
- if(!initClient()){authButtons();return}
+ initClient();
  authButtons();
  sb.auth.onAuthStateChange(()=>setTimeout(refreshUser,0));
  await refreshUser();
  try{await refreshWallet()}catch(e){}
 })();
-</script></body></html>
+</script><div id="codeGateWidget" class="hidden" style="position:fixed;right:14px;top:45%;z-index:75"><button aria-label="Mã vượt link" onclick="openCodeGate()" style="width:54px;height:54px;border-radius:50%;background:#1688f8;color:white;border:3px solid #fff;box-shadow:0 5px 18px #0003;font-size:29px;font-weight:900">B</button></div>
+<div id="codeGateModal" class="modal"><div class="modal-box" style="text-align:center"><div class="modal-head"><h2>🔵 Mã vượt link</h2><button class="close" onclick="closeCodeGate()">×</button></div><p id="codeGateStatus" class="muted">Vui lòng chờ 60 giây để nhận mã.</p><div id="codeGateCountdown" style="font-size:38px;font-weight:900;color:#1688f8;margin:18px 0">60</div><div id="codeGateResult" class="hidden"><div class="credential" id="codeGateValue" style="font-size:22px;font-weight:900;color:#1688f8"></div><button class="primary" style="padding:11px 18px;border-radius:12px" onclick="copyCodeGate()">📋 Sao chép mã</button></div></div></div>
+<script>
+let codeGateTimer=null,codeGateEnd=0,codeGateSpinningTimer=null,codeGateChosen='';
+function renderCodeGate(){
+ const w=document.getElementById('codeGateWidget');
+ if(w)w.classList.add('hidden');
+ const b=document.getElementById('codeGateFooterButton');
+ if(b)b.classList.toggle('hidden',!siteSettings?.code_gate_enabled);
+}
+function getGateCodes(){return String(siteSettings?.code_gate_key||'').split(/[\\n,;]+/).map(x=>x.trim()).filter(Boolean)}
+function openCodeGate(){
+ if(!siteSettings?.code_gate_enabled)return toast('Mã vượt link đang tắt.','danger');
+ if(!getGateCodes().length)return toast('Chưa có mã nào.','danger');
+ document.getElementById('codeGateModal').classList.add('show');
+ document.getElementById('codeGateResult').classList.add('hidden');
+ document.getElementById('codeGateStatus').textContent='Đang quay mã ngẫu nhiên — vui lòng chờ 60 giây.';
+ const counter=document.getElementById('codeGateCountdown');
+ counter.style.display='block';counter.style.animation='gateSpin .7s linear infinite';
+ if(codeGateTimer)clearInterval(codeGateTimer);
+ if(codeGateSpinningTimer)clearInterval(codeGateSpinningTimer);
+ codeGateEnd=Date.now()+60000;
+ codeGateSpinningTimer=setInterval(()=>{counter.textContent=['B','↻','⟳','B'][Math.floor(Math.random()*4)]},120);
+ tickCodeGate();codeGateTimer=setInterval(tickCodeGate,250);
+}
+async function tickCodeGate(){
+ const left=Math.max(0,Math.ceil((codeGateEnd-Date.now())/1000));
+ const counter=document.getElementById('codeGateCountdown');
+ if(left>0){counter.textContent=left;return}
+ clearInterval(codeGateTimer);codeGateTimer=null;
+ if(codeGateSpinningTimer){clearInterval(codeGateSpinningTimer);codeGateSpinningTimer=null}
+ counter.style.animation='none';
+ const codes=getGateCodes();
+ if(!codes.length){document.getElementById('codeGateStatus').textContent='Đã hết mã. Vui lòng quay lại sau.';counter.textContent='0';return}
+ const idx=Math.floor(Math.random()*codes.length);
+ codeGateChosen=codes[idx];
+ const remaining=codes.filter((_,i)=>i!==idx);
+ // Save remaining codes to Supabase so a code cannot be given out repeatedly.
+ const {error}=await sb.from('bd_shop_settings').update({code_gate_key:remaining.join('\\n')||null}).eq('id',1);
+ if(error){document.getElementById('codeGateStatus').textContent='Không thể cập nhật kho mã. Hãy báo Admin.';counter.textContent='!';return}
+ siteSettings.code_gate_key=remaining.join('\\n');
+ document.getElementById('codeGateStatus').textContent='Mã ngẫu nhiên của bạn đã sẵn sàng!';
+ document.getElementById('codeGateValue').textContent=codeGateChosen;
+ document.getElementById('codeGateResult').classList.remove('hidden');
+ counter.textContent='✓';
+ renderCodeGate();
+}
+function closeCodeGate(){document.getElementById('codeGateModal').classList.remove('show');if(codeGateTimer){clearInterval(codeGateTimer);codeGateTimer=null}if(codeGateSpinningTimer){clearInterval(codeGateSpinningTimer);codeGateSpinningTimer=null}}
+async function copyCodeGate(){const v=codeGateChosen;if(!v)return;try{await navigator.clipboard.writeText(v);toast('Đã sao chép mã','success')}catch(e){toast('Mã: '+v)}}
+async function saveCodeGate(){
+ if(currentProfile?.role!=='admin')return toast('Không có quyền','danger');
+ const enabled=!!document.getElementById('gateEnabled')?.checked;
+ const codes=String(document.getElementById('gateKey')?.value||'').split(/[\\n,;]+/).map(x=>x.trim()).filter(Boolean);
+ const key=codes.length?[...new Set(codes)].join('\\n'):null;
+ const {error}=await sb.from('bd_shop_settings').update({code_gate_enabled:enabled,code_gate_key:key}).eq('id',1);
+ if(error)return toast('Chưa lưu được. Hãy kiểm tra cột code_gate_key: '+error.message,'danger');
+ await loadSiteSettings();renderCodeGate();toast('Đã lưu '+codes.length+' mã','success');openAdmin()
+}
+const oldApplySiteConfig=applySiteConfig;applySiteConfig=function(){oldApplySiteConfig();renderCodeGate()};
+</script>
+</body></html>
