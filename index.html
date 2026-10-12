@@ -81,8 +81,8 @@ body{padding-bottom:82px}
   .bottom-nav{width:min(560px,calc(100% - 24px))}
 }
 @keyframes gateSpin{to{transform:rotate(360deg)}}
-.gate-spinner{width:66px;height:66px;margin:18px auto 12px;border:7px solid #dcecff;border-top-color:#1688f8;border-radius:50%;animation:gateSpin .7s linear infinite;display:grid;place-items:center;color:#1688f8;font-weight:1000;font-size:24px}
-.gate-countdown{font-size:40px;font-weight:900;color:#1688f8;margin:8px 0 18px}
+.gate-spinner{width:104px;height:104px;margin:18px auto 12px;border:10px solid #dbeafe;border-top-color:#1688f8;border-right-color:#1688f8;border-radius:50%;animation:gateSpin .8s linear infinite}
+.gate-spinner.done{animation:none;border-color:#16a34a}
 </style></head>
 <body>
 <header><div class="nav"><div class="logo" onclick="showSection('shop')"><img id="customLogo" alt="Logo"><span id="logoText">BD <b style="color:#222">ROBLOX SHOP</b></span></div><div class="header-actions"><button class="zalo-button" title="Liên hệ Zalo" onclick="openZalo()"><img class="zalo-logo" src="https://img.icons8.com/bubbles/1200/zalo.jpg" alt="Zalo"><span>Zalo</span></button><span id="userArea"></span></div></div></header>
@@ -386,7 +386,7 @@ async function refreshWallet(){
  try{await refreshWallet()}catch(e){}
 })();
 </script><div id="codeGateWidget" class="hidden" style="position:fixed;right:14px;top:45%;z-index:75"><button aria-label="Mã vượt link" onclick="openCodeGate()" style="width:54px;height:54px;border-radius:50%;background:#1688f8;color:white;border:3px solid #fff;box-shadow:0 5px 18px #0003;font-size:29px;font-weight:900">B</button></div>
-<div id="codeGateModal" class="modal"><div class="modal-box" style="text-align:center"><div class="modal-head"><h2>🔵 Mã vượt link</h2><button class="close" onclick="closeCodeGate()">×</button></div><p id="codeGateStatus" class="muted">Vui lòng chờ 60 giây để nhận mã.</p><div id="codeGateSpinner" class="gate-spinner" aria-label="Đang tải"></div><div id="codeGateCountdown" class="gate-countdown">60</div><div id="codeGateResult" class="hidden"><div class="credential" id="codeGateValue" style="font-size:22px;font-weight:900;color:#1688f8"></div><button class="primary" style="padding:11px 18px;border-radius:12px" onclick="copyCodeGate()">📋 Sao chép mã</button></div></div></div>
+<div id="codeGateModal" class="modal"><div class="modal-box" style="text-align:center"><div class="modal-head"><h2>🔵 Mã vượt link</h2><button class="close" onclick="closeCodeGate()">×</button></div><p id="codeGateStatus" class="muted">Vui lòng chờ 60 giây để nhận mã.</p><div id="codeGateSpinner" class="gate-spinner" aria-label="Đang tải"></div><div id="codeGateCountdown" style="font-size:38px;font-weight:900;color:#1688f8;margin:8px 0 18px">60s</div><div id="codeGateResult" class="hidden"><div class="credential" id="codeGateValue" style="font-size:22px;font-weight:900;color:#1688f8"></div><button class="primary" style="padding:11px 18px;border-radius:12px" onclick="copyCodeGate()">📋 Sao chép mã</button></div></div></div>
 <script>
 let codeGateTimer=null,codeGateEnd=0,codeGateSpinningTimer=null,codeGateChosen='';
 function renderCodeGate(){
@@ -404,8 +404,8 @@ function openCodeGate(){
  document.getElementById('codeGateStatus').textContent='Đang quay mã ngẫu nhiên — vui lòng chờ 60 giây.';
  const counter=document.getElementById('codeGateCountdown');
  const spinner=document.getElementById('codeGateSpinner');
- counter.style.display='block';counter.textContent='60';counter.style.animation='none';
- spinner.style.display='grid';spinner.style.animation='gateSpin .7s linear infinite';
+ spinner.classList.remove('done');spinner.style.display='block';
+ counter.style.display='block';
  if(codeGateTimer)clearInterval(codeGateTimer);
  if(codeGateSpinningTimer)clearInterval(codeGateSpinningTimer);
  codeGateEnd=Date.now()+60000;
@@ -414,24 +414,24 @@ function openCodeGate(){
 async function tickCodeGate(){
  const left=Math.max(0,Math.ceil((codeGateEnd-Date.now())/1000));
  const counter=document.getElementById('codeGateCountdown');
- if(left>0){counter.textContent=left;return}
+ if(left>0){counter.textContent=left+'s';return}
  clearInterval(codeGateTimer);codeGateTimer=null;
  if(codeGateSpinningTimer){clearInterval(codeGateSpinningTimer);codeGateSpinningTimer=null}
- counter.style.animation='none';
- const spinner=document.getElementById('codeGateSpinner');spinner.style.animation='none';spinner.style.display='none';
+ counter.textContent='0s';
+ const spinner=document.getElementById('codeGateSpinner');spinner.classList.add('done');
  const codes=getGateCodes();
- if(!codes.length){document.getElementById('codeGateStatus').textContent='Đã hết mã. Vui lòng quay lại sau.';counter.textContent='0';return}
+ if(!codes.length){document.getElementById('codeGateStatus').textContent='Đã hết mã. Vui lòng quay lại sau.';counter.textContent='0s';return}
  const idx=Math.floor(Math.random()*codes.length);
  codeGateChosen=codes[idx];
  const remaining=codes.filter((_,i)=>i!==idx);
  // Save remaining codes to Supabase so a code cannot be given out repeatedly.
  const {error}=await sb.from('bd_shop_settings').update({code_gate_key:remaining.join('\\n')||null}).eq('id',1);
- if(error){document.getElementById('codeGateStatus').textContent='Không thể cập nhật kho mã. Hãy báo Admin.';counter.textContent='!';return}
+ if(error){document.getElementById('codeGateStatus').textContent='Không thể cập nhật kho mã. Hãy báo Admin.';counter.textContent='0s';return}
  siteSettings.code_gate_key=remaining.join('\\n');
  document.getElementById('codeGateStatus').textContent='Mã ngẫu nhiên của bạn đã sẵn sàng!';
  document.getElementById('codeGateValue').textContent=codeGateChosen;
  document.getElementById('codeGateResult').classList.remove('hidden');
- counter.textContent='XONG';
+ spinner.style.display='none';
  renderCodeGate();
 }
 function closeCodeGate(){document.getElementById('codeGateModal').classList.remove('show');if(codeGateTimer){clearInterval(codeGateTimer);codeGateTimer=null}if(codeGateSpinningTimer){clearInterval(codeGateSpinningTimer);codeGateSpinningTimer=null}}
